@@ -36,8 +36,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload static html files
-          path: './.legacy/zue.dev-main/public/'
+          # Upload static html files from dir
+          path: "./public/"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
