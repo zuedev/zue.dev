@@ -1,7 +1,8 @@
 const links = [
   { href: "/", text: "Home" },
   {
-    href: "/thoughts",
+    // href: "/thoughts",
+    href: "#",
     text: "Thoughts",
     classes: "opacity-25 cursor-not-allowed",
     title: "Coming soon...",
