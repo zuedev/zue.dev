@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --zuedev-purple: #240054;
+}
+
+html {
+  background: var(--zuedev-purple);
+  color: white;
+  font-family: monospace;
+}
+
+/* hide scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
