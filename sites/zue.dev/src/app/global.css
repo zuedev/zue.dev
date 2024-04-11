@@ -12,6 +12,10 @@ html {
   font-family: monospace;
 }
 
+body {
+  min-height: 100vh;
+}
+
 /* hide scrollbar */
 ::-webkit-scrollbar {
   display: none;
