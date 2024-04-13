@@ -257,6 +257,8 @@ export default function Resume() {
                 </div>
               </div>
 
+              <p className="text-justify">{job.expound}</p>
+
               <div>
                 <span className="text-xl font-bold">Achievements</span>
                 <ul className="ml-8 list-disc">
@@ -266,7 +268,10 @@ export default function Resume() {
                 </ul>
               </div>
 
-              <p className="text-justify">{job.expound}</p>
+              <div>
+                <span className="text-xl font-bold">Skills</span>
+                <p className="text-justify">{job.skills.join(", ")}</p>
+              </div>
             </li>
           ))}
         </ul>
