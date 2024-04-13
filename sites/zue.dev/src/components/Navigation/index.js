@@ -7,7 +7,7 @@ const links = [
     classes: "opacity-25 cursor-not-allowed",
     title: "Coming soon...",
   },
-  { href: "/cv.pdf", text: "Resume" },
+  { href: "/resume", text: "Resume" },
 ];
 
 const socials = [
