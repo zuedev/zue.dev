@@ -192,10 +192,10 @@ export default function Resume() {
       </header>
       <section className="space-y-4">
         <div className="flex flex-row text-4xl font-black">
-          <h1 className="bg-zd-purple text-white p-2">
+          <h1 className="bg-zd-purple text-white px-2 py-1">
             <span className="panText">{resumeData.name}</span>
           </h1>
-          <h2 className="bg-black text-white p-2">{resumeData.title}</h2>
+          <h2 className="bg-black text-white px-2 py-1">{resumeData.title}</h2>
         </div>
         <div>
           <ul className="flex flex-row h-full items-center">

@@ -38,7 +38,7 @@ body {
 .raveBackground {
   /* rainbow */
   background: red;
-  animation: raveBackgroundAnimation 2s linear infinite;
+  animation: raveBackgroundAnimation 1s linear infinite;
 }
 
 @keyframes raveBackgroundAnimation {
@@ -69,7 +69,7 @@ body {
   background: black;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: raveBackgroundTextAnimation 2s linear infinite;
+  animation: raveBackgroundTextAnimation 1s linear infinite;
 }
 
 @keyframes raveBackgroundTextAnimation {
