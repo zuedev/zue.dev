@@ -1,4 +1,23 @@
+import { Inter } from "next/font/google";
+
 import "./page.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// https://shields.io/badges/static-badge
+const skillsBadges = {
+  nodejs: {
+    badgeContent: "Node.js",
+    style: "flat-square",
+    logo: "nodedotjs",
+    logoColor: "white",
+    color: "026e00",
+    link: "https://nodejs.org",
+  },
+};
 
 const resumeData = {
   name: "Alex Pooley",
@@ -49,16 +68,7 @@ const resumeData = {
       end: null,
       type: "Full-Time",
       location: "Remote",
-      skills: [
-        "Node.js",
-        "React",
-        "Docker",
-        "Next.js",
-        "Tailwind CSS",
-        "MongoDB",
-        "Cloudflare",
-        "Vercel",
-      ],
+      skills: [skillsBadges.nodejs],
       achievements: [
         "Built a community of over 1000 members.",
         "Launched a successful Discord server.",
@@ -76,16 +86,7 @@ const resumeData = {
       end: null,
       type: "Full-Time",
       location: "Remote",
-      skills: [
-        "Node.js",
-        "React",
-        "Docker",
-        "Next.js",
-        "Tailwind CSS",
-        "MongoDB",
-        "Cloudflare",
-        "Vercel",
-      ],
+      skills: [skillsBadges.nodejs],
       achievements: [
         "Built a community of over 1000 members.",
         "Launched a successful Discord server.",
@@ -103,16 +104,7 @@ const resumeData = {
       end: null,
       type: "Full-Time",
       location: "Remote",
-      skills: [
-        "Node.js",
-        "React",
-        "Docker",
-        "Next.js",
-        "Tailwind CSS",
-        "MongoDB",
-        "Cloudflare",
-        "Vercel",
-      ],
+      skills: [skillsBadges.nodejs],
       achievements: [
         "Built a community of over 1000 members.",
         "Launched a successful Discord server.",
@@ -126,7 +118,7 @@ const resumeData = {
 
 export default function Resume() {
   return (
-    <main className="bg-white min-h-screen p-4 space-y-4">
+    <main className={`bg-white min-h-screen p-4 space-y-4 ${inter.className}`}>
       <div className="raveBackground p-4 text-center text-2xl font-bold">
         ⚠️{" "}
         <span className="raveBackgroundText">
@@ -134,8 +126,8 @@ export default function Resume() {
         </span>{" "}
         ⚠️
       </div>
-      <header className="flex flex-row">
-        <div className="flex flex-row space-x-4 h-24 align-middle flex-grow">
+      <header className="flex flex-row h-24">
+        <div className="flex flex-row space-x-4 align-middle flex-grow">
           <img src={resumeData.avatar} alt={resumeData.name} />
           <div className="flex flex-col place-content-evenly">
             {resumeData.bio.map((line, index) => (
@@ -270,7 +262,21 @@ export default function Resume() {
 
               <div>
                 <span className="text-xl font-bold">Skills</span>
-                <p className="text-justify">{job.skills.join(", ")}</p>
+                <p className="text-justify">
+                  {job.skills.map((skill) => (
+                    <a
+                      key={skill.badgeContent}
+                      href={skill.link}
+                      className="badge badge-pill badge-primary"
+                    >
+                      <img
+                        src={`https://img.shields.io/badge/${skill.badgeContent}-${skill.color}?style=${skill.style}&logo=${skill.logo}&logoColor=${skill.logoColor}`}
+                        alt={skill.badgeContent}
+                        className="h-8 inline"
+                      />
+                    </a>
+                  ))}
+                </p>
               </div>
             </li>
           ))}
