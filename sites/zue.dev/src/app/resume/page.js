@@ -258,7 +258,7 @@ const resumeData = {
       title: "LinkedIn",
     },
   ],
-  work: [
+  career: [
     {
       position: "Director of Engineering",
       company: "Unnamed Group",
@@ -388,6 +388,20 @@ const resumeData = {
       ],
     },
   ],
+  projects: [
+    {
+      name: "World Anvil",
+      brief: "Worldbuilding Platform",
+      url: "https://worldanvil.com",
+      start: new Date("2017-12-01"),
+      end: new Date("2023-02-01"),
+      type: "Professional",
+      description:
+        "World Anvil is a worldbuilding platform that enables writers, gamers, and creators to build and share their fictional worlds.",
+      contribution:
+        "I was responsible for the high-availability and scalability of the platform, including the development of DevOps pipelines and monitoring systems alongside general networking and security.",
+    },
+  ],
 };
 
 export default function Resume() {
@@ -481,16 +495,14 @@ export default function Resume() {
           </ul>
         </div>
       </section>
-      <hr />
       <section className="space-y-4">
         <h3 className="text-4xl font-bold">About</h3>
         <p className="text-lg text-justify">{resumeData.about}</p>
       </section>
-      <hr />
       <section className="space-y-4">
         <h3 className="text-4xl font-bold">Career</h3>
         <ul>
-          {resumeData.work.map((job) => (
+          {resumeData.career.map((job) => (
             <li
               key={job.company}
               className="space-y-4 border-black border-l-4 px-4 py-4 odd:bg-gray-100"
@@ -552,6 +564,49 @@ export default function Resume() {
                   ))}
                 </ul>
               </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <section className="space-y-4">
+        <h3 className="text-4xl font-bold">Projects</h3>
+        <ul>
+          {resumeData.projects.map((project) => (
+            <li
+              key={project.name}
+              className="space-y-4 border-black border-l-4 px-4 py-4 odd:bg-gray-100"
+            >
+              <div className="flex flex-row space-x-4 place-content-between">
+                <div className="flex flex-col">
+                  <h4 className="text-xl font-bold">
+                    <a
+                      href={project.url}
+                      className="text-lg font-bold underline"
+                    >
+                      {project.name}
+                    </a>
+                  </h4>
+                  <p className="text-lg text-gray-500">{project.brief}</p>
+                </div>
+                <div className="flex flex-col text-right">
+                  <span>
+                    {project.start.toLocaleDateString("en-GB", {
+                      year: "numeric",
+                      month: "long",
+                    })}
+                    {" - "}
+                    {project.end.toLocaleDateString("en-GB", {
+                      year: "numeric",
+                      month: "long",
+                    })}
+                  </span>
+                  <span>{project.type}</span>
+                </div>
+              </div>
+
+              <p className="text-justify">{project.description}</p>
+
+              <p className="text-justify">{project.contribution}</p>
             </li>
           ))}
         </ul>
