@@ -8,6 +8,11 @@ const links = [
     title: "Coming soon...",
   },
   { href: "/resume", text: "Resume" },
+  {
+    href: "/secure",
+    text: "Login",
+    classes: "bg-black px-4 py-2",
+  },
 ];
 
 const socials = [
