@@ -1,29 +1,9 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { UserButton } from "@clerk/nextjs";
 
 export default async function SecureHome() {
-  const user = await currentUser();
-
-  if (!user)
-    return (
-      <>
-        <p>Not signed in. Redirecting...</p>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.location.href = '/secure/sign-in';`,
-          }}
-        />
-      </>
-    );
-
-  console.log(user);
-
   return (
     <>
-      Hello,{" "}
-      <b>
-        {user?.firstName || user?.emailAddresses[0]?.emailAddress || "UNKNOWN"}
-      </b>
-      ! :3
+      <UserButton />
     </>
   );
 }

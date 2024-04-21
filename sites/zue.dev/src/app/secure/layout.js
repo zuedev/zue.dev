@@ -1,11 +1,14 @@
-import { ClerkProvider } from "@clerk/nextjs";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 
 export default function SecureLayout({ children }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body>{children}</body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body>
+        <SignedOut>
+          <RedirectToSignIn />
+        </SignedOut>
+        <SignedIn>{children}</SignedIn>
+      </body>
+    </html>
   );
 }
