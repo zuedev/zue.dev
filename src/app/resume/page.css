@@ -1,0 +1,10 @@
+html {
+  background: black;
+}
+
+/* disable black background on prints */
+@media print {
+  html {
+    background: white;
+  }
+}
