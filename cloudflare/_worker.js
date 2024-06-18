@@ -14,7 +14,7 @@ export default {
         case "/_worker/guestbook/add":
           const { name, message } = await request.json();
 
-          const guestbook = await environment.KV.get("guestbook");
+          let guestbook = await environment.KV.get("guestbook");
 
           if (guestbook) {
             guestbook.push({ name, message });
