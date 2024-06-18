@@ -15,30 +15,34 @@ export default function Home() {
             building things that help and entertain people.
           </p>
           <p>
-            If you want to learn more about me, check out my portfolio. In
-            short:
+            If you want to learn more about me, check out my resume. In short:
           </p>
           <ul className="list-disc list-inside ml-4">
-            <li>A full-stack developer for more than 4 years;</li>
-            <li>A lead developer for another 6 years;</li>
-            <li>An engineering head presently, since 2019.</li>
+            <li>Software engineer (full-stack) for more than 11 years;</li>
+            <li>Trusted with leadership for 8 of those years;</li>
+            <li>Given directorship of a non-profit since 2023;</li>
+            <li>
+              Programming language polyglot (JavaScript, Python, C#, PHP, Go,
+              Rust, Lua, Ruby, C++);
+            </li>
+            <li>
+              Running Linux (Arch) and Windows on a daily basis, wished I used
+              macOS more often;
+            </li>
+            <li>
+              Been living in the Unreal Engine for ~4 years, and I'm still
+              learning more about it;
+            </li>
           </ul>
-          <p>
-            I have my own for-profit business called Termina One, as well as a
-            non-profit called Unnamed Group.
-          </p>
+          <p>Want to learn more? Send me a message!</p>
         </div>
 
         <div className="p-4 bg-gradient-to-r from-cyan-500 to-green-500 space-y-4 text-justify text-black">
           <h3 className="text-4xl font-bold">Informally...</h3>
           <p>
-            In my spare time, I'm an avid gamer and a hobbyist game developer. I
-            always have music playing in the background, and I'm a big fan of
-            both Dungeons & Dragons and Cyberpunk RED.
-          </p>
-          <p>
-            You can most likely find me on Discord or Steam, so feel free to add
-            me and say hi!
+            In my spare time, I'm an avid gamer and a hobbyist musician. On the
+            weekends I can usually be found DM'ing both Dungeons & Dragons and
+            Cyberpunk RED with my friends.
           </p>
         </div>
 
