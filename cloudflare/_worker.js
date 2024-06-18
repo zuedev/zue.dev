@@ -1,24 +1,38 @@
 export default {
-  async fetch(request, env) {
+  async fetch(request, environment, context) {
     const url = new URL(request.url);
 
-    if (url.pathname.startsWith("/_worker/"))
-      return _workerHandler(url.pathname);
+    if (url.pathname.startsWith("/_worker/")) {
+      switch (pathname) {
+        case "/_worker/hello":
+          return Respond("Hello, world!");
+        case "/_worker/goodbye":
+          return Respond("Goodbye, world!");
+        case "/_worker/guestbook/get":
+          const getGuestbook = await environment.KV.get("guestbook");
+          return Respond(getGuestbook);
+        case "/_worker/guestbook/add":
+          const { name, message } = await request.json();
 
-    return env.ASSETS.fetch(request);
+          const guestbook = await environment.KV.get("guestbook");
+
+          if (guestbook) {
+            guestbook.push({ name, message });
+          } else {
+            guestbook = [{ name, message }];
+          }
+
+          await environment.KV.put("guestbook", guestbook);
+
+          return Respond(guestbook);
+        default:
+          return Respond("Not found", { status: 404 });
+      }
+    }
+
+    return environment.ASSETS.fetch(request);
   },
 };
-
-function _workerHandler(pathname) {
-  switch (pathname) {
-    case "/_worker/hello":
-      return Respond("Hello, world!");
-    case "/_worker/goodbye":
-      return Respond("Goodbye, world!");
-    default:
-      return Respond("Not found", { status: 404 });
-  }
-}
 
 function Respond(response, options = {}) {
   if (typeof response === "string")
