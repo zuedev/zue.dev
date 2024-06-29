@@ -402,6 +402,29 @@ const resumeData = {
         "I was responsible for the high-availability and scalability of the platform, including the development of DevOps pipelines and monitoring systems alongside general networking and security.",
     },
   ],
+  certifications: [
+    {
+      issuer: "freeCodeCamp",
+      issuerIcon: "https://cdn.simpleicons.org/freecodecamp",
+      issuerProfile: "https://www.freecodecamp.org/zuedev",
+      title: "Responsive Web Design",
+      url: "https://www.freecodecamp.org/certification/zuedev/responsive-web-design",
+    },
+    {
+      issuer: "freeCodeCamp",
+      issuerIcon: "https://cdn.simpleicons.org/freecodecamp",
+      issuerProfile: "https://www.freecodecamp.org/zuedev",
+      title: "JavaScript Algorithms and Data Structures",
+      url: "https://www.freecodecamp.org/certification/zuedev/javascript-algorithms-and-data-structures",
+    },
+    {
+      issuer: "freeCodeCamp",
+      issuerIcon: "https://cdn.simpleicons.org/freecodecamp",
+      issuerProfile: "https://www.freecodecamp.org/zuedev",
+      title: "Python for Data Science",
+      url: "https://www.freecodecamp.org/certification/zuedev/python-for-data-science",
+    },
+  ],
 };
 
 export default function Resume() {
@@ -622,6 +645,46 @@ export default function Resume() {
           ))}
         </ul>
       </section>
+
+      <hr />
+
+      <section className="space-y-4">
+        <h3 className="text-4xl font-bold">Certifications</h3>
+        <ul className="grid grid-cols-3 gap-2">
+          {resumeData.certifications.map((certification) => (
+            <li key={certification.title} className="px-2 py-2 odd:bg-gray-100">
+              <div className="flex flex-col">
+                <h4 className="text-xl font-bold">
+                  <img
+                    src={certification.issuerIcon}
+                    alt={certification.issuer}
+                    className="h-8"
+                  />
+                  <a
+                    href={certification.url}
+                    target="_blank"
+                    className="text-lg font-bold underline"
+                  >
+                    {certification.title}
+                  </a>
+                </h4>
+                <div>
+                  <span>from </span>
+                  <a
+                    href={certification.issuerProfile}
+                    target="_blank"
+                    className="text-lg text-gray-500 underline"
+                  >
+                    {certification.issuer}
+                  </a>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <hr />
 
       <footer className="text-center text-gray-500 text-sm">
         <p>
