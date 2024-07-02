@@ -424,6 +424,13 @@ const resumeData = {
       title: "Python for Data Science",
       url: "https://www.freecodecamp.org/certification/zuedev/python-for-data-science",
     },
+    {
+      issuer: "freeCodeCamp",
+      issuerIcon: "https://cdn.simpleicons.org/freecodecamp",
+      issuerProfile: "https://www.freecodecamp.org/zuedev",
+      title: "Data Visualization",
+      url: "https://www.freecodecamp.org/certification/zuedev/data-visualization",
+    },
   ],
 };
 
