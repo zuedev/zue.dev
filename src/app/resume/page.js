@@ -387,6 +387,31 @@ const resumeData = {
         "Managed a team of 2 developers.",
       ],
     },
+    {
+      position: "Backend Engineer",
+      company: "Peccy Networks",
+      url: "https://web.archive.org/web/20160305203701/http://peccy.net/",
+      brief: "Web Development Agency",
+      start: new Date("2014-07-28"),
+      end: new Date("2016-11-01"),
+      type: "Full-Time",
+      location: "London, United Kingdom",
+      skills: [
+        skillsBadges.html,
+        skillsBadges.css,
+        skillsBadges.javascript,
+        skillsBadges.php,
+        skillsBadges.apache,
+        skillsBadges.mysql,
+      ],
+      expound: `I was responsible for developing and maintaining the company's client websites. I also developed custom plugins and themes for WordPress, Joomla, and Magento.`,
+      achievements: [
+        "Developed custom themes and plugins for CMS platforms.",
+        "Optimized websites for SEO and performance.",
+        "Managed a team of 3 developers and 1 designer.",
+        "Implemented a custom ticketing system for client support.",
+      ],
+    },
   ],
   projects: [
     {
