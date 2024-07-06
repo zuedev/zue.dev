@@ -1,11 +1,11 @@
 const links = [
   { href: "/", text: "Home" },
-  {
-    href: "https://thoughts.zue.dev",
-    text: "Thoughts",
-    // classes: "opacity-25 cursor-not-allowed",
-    // title: "Coming soon...",
-  },
+  // {
+  // href: "https://thoughts.zue.dev",
+  // text: "Thoughts",
+  // classes: "opacity-25 cursor-not-allowed",
+  // title: "Coming soon...",
+  // },
   { href: "/resume", text: "Resume" },
 ];
 
