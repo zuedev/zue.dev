@@ -1,0 +1,60 @@
+/* RAVE!!! */
+.rave {
+  background: red;
+  animation: raveBackgroundAnimation 1s linear infinite;
+}
+
+@keyframes raveBackgroundAnimation {
+  0% {
+    background-color: red;
+  }
+  16.666% {
+    background-color: orange;
+  }
+  33.333% {
+    background-color: yellow;
+  }
+  50% {
+    background-color: green;
+  }
+  66.666% {
+    background-color: blue;
+  }
+  83.333% {
+    background-color: indigo;
+  }
+  100% {
+    background-color: violet;
+  }
+}
+
+.rave > * {
+  background: black;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: raveBackgroundTextAnimation 1s linear infinite;
+}
+
+@keyframes raveBackgroundTextAnimation {
+  0% {
+    background-color: black;
+  }
+  16.666% {
+    background-color: black;
+  }
+  33.333% {
+    background-color: black;
+  }
+  50% {
+    background-color: white;
+  }
+  66.666% {
+    background-color: white;
+  }
+  83.333% {
+    background-color: white;
+  }
+  100% {
+    background-color: black;
+  }
+}

@@ -1,0 +1,12 @@
+/* make text pan :3 */
+.pan {
+  background: linear-gradient(
+    45deg,
+    #ff1b8d 33%,
+    #ffd800 33%,
+    #ffd800 66%,
+    #21b1ff 66%
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
