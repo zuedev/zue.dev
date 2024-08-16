@@ -6,6 +6,7 @@
 /stripe https://billing.stripe.com/p/login/6oE8Ag4EK2N82OI000
 /monzo https://monzo.me/alexanderpooley5
 
-/cv /resume.pdf
-/cv.pdf /resume.pdf
-/resume /resume.pdf
+/cv /resume/
+/cv.pdf /resume/
+/resume.pdf /resume/
+/resume /resume/
