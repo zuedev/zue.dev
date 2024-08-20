@@ -125,6 +125,32 @@
         margin-bottom: 1rem;
       }
 
+      /* endeavours styling */
+      #endeavours {
+        display: flex;
+        gap: 1rem;
+      }
+
+      #endeavours > a > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem 1rem;
+      }
+
+      #endeavours > a > div > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* make endeavours logo fit better */
+      #endeavours img {
+        width: 100%;
+        max-width: 128px;
+      }
+
       /* projects styling */
       #projects {
         display: flex;
@@ -149,30 +175,6 @@
       #projects img {
         width: 100%;
         max-width: 128px;
-      }
-
-      /* a96 project styling */
-      #projects #area96digital {
-        background: linear-gradient(135deg, #00b843 0%, #003fc6 100%);
-      }
-
-      /* t1 project styling */
-      #projects #terminaone {
-        background: yellow;
-        color: black;
-      }
-
-      /* ug project styling */
-      #projects #unnamedgroup {
-        background-image: url("./assets/images/arcade_carpet.png");
-        background-size: 400px;
-        background-repeat: repeat;
-        color: white;
-      }
-
-      /* darken ug background */
-      #projects #unnamedgroup > div {
-        background: rgba(0, 0, 0, 0.5);
       }
 
       /* contact styling */
@@ -231,9 +233,18 @@
         </p>
       </div>
     </article>
-    <article id="projects">
-      <h2>Projects</h2>
-      <a id="area96digital" href="https://area96.digital" target="_blank">
+    <article id="endeavours">
+      <h2>Endeavours</h2>
+      <p>
+        The following are some of the projects I'm involved with at a much
+        grander and involved scale. Instead of just being a developer, I'm a
+        co-founder and director of these companies and communities. 🚀
+      </p>
+      <a
+        href="https://area96.digital"
+        target="_blank"
+        style="background: linear-gradient(135deg, #00b843 0%, #003fc6 100%)"
+      >
         <div>
           <div>
             <h3>Area96 Digital</h3>
@@ -242,7 +253,11 @@
           <img src="./assets/images/logo96.png" alt="Area96 Logo" />
         </div>
       </a>
-      <a id="terminaone" href="https://termina.one" target="_blank">
+      <a
+        href="https://termina.one"
+        target="_blank"
+        style="background: yellow; color: black"
+      >
         <div>
           <div>
             <h3>Termina One</h3>
@@ -251,13 +266,91 @@
           <img src="./assets/images/t1_logo_tight.png" alt="Termina One Logo" />
         </div>
       </a>
-      <a id="unnamedgroup" href="https://unnamed.group" target="_blank">
-        <div>
+      <a
+        href="https://unnamed.group"
+        target="_blank"
+        style="
+          background: url('./assets/images/arcade_carpet.png') center center;
+          background-size: 400px;
+          background-repeat: repeat;
+        "
+      >
+        <div style="background: rgba(0, 0, 0, 0.5)">
           <div>
             <h3>Unnamed Group</h3>
             <p>Non-profit gaming community powered by open-source. 🎮</p>
           </div>
           <img src="./assets/images/ug-logo24.png" alt="Unnamed Group Logo" />
+        </div>
+      </a>
+    </article>
+    <article id="projects">
+      <h2>Projects</h2>
+      <p>
+        These are some of my personal projects that I've been working on in my
+        spare time. They're all open-source and free to use, so feel free to
+        check them out and contribute if you're interested! 🌟
+      </p>
+      <a
+        href="https://zuedev.github.io/BigBrotherDiscordBot/"
+        target="_blank"
+        style="background: linear-gradient(135deg, #111 33%, #b00707 100%)"
+      >
+        <div>
+          <img
+            src="https://github.com/zuedev/BigBrotherDiscordBot/raw/main/assets/bb-logo-square.png"
+          />
+          <div>
+            <h3>Big Brother</h3>
+            <p>
+              Powerful and complete replacement for Discord's built-in audit
+              log.
+            </p>
+          </div>
+        </div>
+      </a>
+      <a
+        href="https://zuedev.github.io/LootTrackerDiscordBot/"
+        target="_blank"
+        style="
+          background: linear-gradient(135deg, #fff 20%, gold 100%);
+          color: black;
+        "
+      >
+        <div>
+          <img
+            src="https://github.com/zuedev/LootTrackerDiscordBot/raw/main/avatar.png"
+          />
+          <div>
+            <h3>Loot Tracker</h3>
+            <p>
+              A Discord bot that tracks loot, best used for TTRPGs like D&D.
+            </p>
+          </div>
+        </div>
+      </a>
+      <a
+        href="https://github.com/uagpmc/arma3/tree/main/mods/ACE3_Piss_Bags"
+        target="_blank"
+        style="
+          background: linear-gradient(
+            135deg,
+            #ff9500 20%,
+            rgb(255, 42, 0) 100%
+          );
+        "
+      >
+        <div>
+          <img
+            src="https://steamuserimages-a.akamaihd.net/ugc/2465238079967086619/747509DFCFD923B8A3292CB6454DCB9A71D3F845/?imw=268&imh=268&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"
+          />
+          <div>
+            <h3>ACE3 Piss Bags</h3>
+            <p>
+              A parody mod for Arma 3 that replaces ACE3's blood bags with
+              something else.
+            </p>
+          </div>
         </div>
       </a>
     </article>
