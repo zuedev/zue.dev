@@ -132,6 +132,34 @@
   <body>
     <div id="root"></div>
 
+    <!-- twemoji -->
+    <script
+      src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // on load
+      document.addEventListener("ReactDone", async () => {
+        console.log("React done, parsing twemoji");
+
+        // parse twemoji
+        twemoji.parse(document.body, {
+          folder: "svg",
+          ext: ".svg",
+          base: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/",
+        });
+
+        // apply twemoji style fixes
+        document.querySelectorAll("img.emoji").forEach((img) => {
+          img.style.height = "1em";
+          img.style.width = "1em";
+          img.style.margin = "0 0.05em 0 0.1em";
+          img.style.verticalAlign = "-0.1em";
+          img.style.display = "inline";
+        });
+      });
+    </script>
+
     <!-- load react -->
     <script
       src="https://unpkg.com/react@18/umd/react.development.js"
@@ -603,7 +631,11 @@
         ],
       };
 
-      const resume = () => {
+      function Resume() {
+        React.useEffect(() => {
+          document.dispatchEvent(new Event("ReactDone"));
+        }, []);
+
         return (
           <main className="bg-white min-h-screen p-4 space-y-4 max-w-screen-sm md:max-w-screen-md lg:max-w-[795px] print:max-w-full mx-auto">
             <div className="raveBackground p-4 text-center text-2xl font-bold print:hidden">
@@ -888,38 +920,9 @@
             </footer>
           </main>
         );
-      };
+      }
 
-      ReactDOM.createRoot(document.querySelector("#root")).render(resume());
-    </script>
-
-    <!-- twemoji -->
-    <script
-      src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      // on load
-      document.addEventListener("DOMContentLoaded", async () => {
-        // wait 1 second
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        // parse twemoji
-        twemoji.parse(document.body, {
-          folder: "svg",
-          ext: ".svg",
-          base: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/",
-        });
-
-        // apply twemoji style fixes
-        document.querySelectorAll("img.emoji").forEach((img) => {
-          img.style.height = "1em";
-          img.style.width = "1em";
-          img.style.margin = "0 0.05em 0 0.1em";
-          img.style.verticalAlign = "-0.1em";
-          img.style.display = "inline";
-        });
-      });
+      ReactDOM.createRoot(document.querySelector("#root")).render(<Resume />);
     </script>
   </body>
 </html>
