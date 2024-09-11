@@ -630,7 +630,6 @@
               </div>
               <div className="flex flex-col place-content-evenly text-gray-500 text-right">
                 <span>
-                  📍{" "}
                   <a
                     href={
                       "https://www.google.co.uk/maps/place/" +
@@ -640,37 +639,38 @@
                     target="_blank"
                   >
                     {resumeData.location}
-                  </a>
+                  </a>{" "}
+                  📍
                 </span>
                 <span>
-                  📧{" "}
                   <a
                     href={"mailto:" + resumeData.email}
                     className="text-blue-500 underline decoration-dotted"
                     target="_blank"
                   >
                     {resumeData.email}
-                  </a>
+                  </a>{" "}
+                  📧
                 </span>
                 <span>
-                  📱{" "}
                   <a
                     href={"tel:" + resumeData.phone.replaceAll(" ", "")}
                     className="text-blue-500 underline decoration-dotted"
                     target="_blank"
                   >
                     {resumeData.phone}
-                  </a>
+                  </a>{" "}
+                  📱
                 </span>
                 <span>
-                  🌎{" "}
                   <a
                     href={resumeData.website}
                     className="text-blue-500 underline decoration-dotted"
                     target="_blank"
                   >
                     {resumeData.website}
-                  </a>
+                  </a>{" "}
+                  🌎
                 </span>
               </div>
             </header>
@@ -741,14 +741,30 @@
                                 year: "numeric",
                                 month: "long",
                               })
-                            : "Present"}
+                            : "Present"}{" "}
+                          📅
                         </span>
-                        <span>{job.type}</span>
-                        <span>{job.location}</span>
+                        <span>{job.type} 👔</span>
+                        <span>{job.location} 🏢</span>
                       </div>
                     </div>
 
-                    <div>
+                    <div className="space-y-2">
+                      <span className="text-xl font-bold">Brief</span>
+                      <p className="text-justify">{job.expound}</p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <span className="text-xl font-bold">Achievements</span>
+                      <ul className="ml-8 list-disc">
+                        {job.achievements.map((achievement) => (
+                          <li key={achievement}>{achievement}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="space-y-2">
+                      <span className="text-xl font-bold">Technologies</span>
                       <p className="flex flex-row space-x-2">
                         {job.skills.map((skill) => (
                           <a key={skill.badgeContent} href={skill.link}>
@@ -763,17 +779,6 @@
                           </a>
                         ))}
                       </p>
-                    </div>
-
-                    <p className="text-justify">{job.expound}</p>
-
-                    <div>
-                      <span className="text-xl font-bold">Achievements</span>
-                      <ul className="ml-8 list-disc">
-                        {job.achievements.map((achievement) => (
-                          <li key={achievement}>{achievement}</li>
-                        ))}
-                      </ul>
                     </div>
                   </li>
                 ))}
@@ -886,6 +891,35 @@
       };
 
       ReactDOM.createRoot(document.querySelector("#root")).render(resume());
+    </script>
+
+    <!-- twemoji -->
+    <script
+      src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // on load
+      document.addEventListener("DOMContentLoaded", async () => {
+        // wait 1 second
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        // parse twemoji
+        twemoji.parse(document.body, {
+          folder: "svg",
+          ext: ".svg",
+          base: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/",
+        });
+
+        // apply twemoji style fixes
+        document.querySelectorAll("img.emoji").forEach((img) => {
+          img.style.height = "1em";
+          img.style.width = "1em";
+          img.style.margin = "0 0.05em 0 0.1em";
+          img.style.verticalAlign = "-0.1em";
+          img.style.display = "inline";
+        });
+      });
     </script>
   </body>
 </html>
