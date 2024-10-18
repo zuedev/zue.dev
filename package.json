@@ -9,6 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/monaspace-argon": "^5.1.0",
+    "@fontsource/monaspace-krypton": "^5.1.0",
+    "@fontsource/monaspace-neon": "^5.1.0",
+    "@fontsource/monaspace-radon": "^5.1.0",
+    "@fontsource/monaspace-xenon": "^5.1.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
