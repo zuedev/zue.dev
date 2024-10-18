@@ -27,7 +27,7 @@ export default () => {
                 If you want to learn more about me, check out my{" "}
                 <a
                   className="underline decoration-wavy text-orange-500 dark:text-yellow-300"
-                  href="/resume"
+                  href="/resume/index.html"
                 >
                   resume
                 </a>
