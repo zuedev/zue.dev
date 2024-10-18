@@ -8,6 +8,21 @@ import "@fontsource/monaspace-xenon";
 // always import global styles last
 import "./globals.css";
 
+export const metadata = {
+  title: "zuedev's space",
+  description: "Hello, World! I'm zuedev.",
+  icons: {
+    icon: "/avatar.png",
+  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default ({ children }) => {
   return (
     <html
