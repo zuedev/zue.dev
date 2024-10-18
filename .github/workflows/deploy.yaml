@@ -34,4 +34,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 424d9dabd39849818d9e22366a20e4d6
           projectName: www-zue-dev
-          directory: public
+          directory: out
