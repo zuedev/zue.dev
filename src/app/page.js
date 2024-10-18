@@ -26,6 +26,7 @@ export default () => {
                 <a
                   className="underline decoration-wavy text-orange-500 dark:text-yellow-300"
                   href="/resume/index.html"
+                  target="_blank"
                 >
                   resume
                 </a>
@@ -39,6 +40,7 @@ export default () => {
                   <a
                     className="underline decoration-wavy text-blue-500 dark:text-cyan-300"
                     href="https://unnamed.group"
+                    target="_blank"
                   >
                     non-profit
                   </a>{" "}
@@ -56,6 +58,7 @@ export default () => {
                   <a
                     className="underline decoration-wavy text-green-700 dark:text-green-400"
                     href="/mentoring"
+                    target="_blank"
                   >
                     mentoring
                   </a>{" "}
@@ -71,6 +74,7 @@ export default () => {
                 <a
                   className="underline decoration-wavy text-purple-700 dark:text-purple-400"
                   href="/steam"
+                  target="_blank"
                 >
                   avid gamer
                 </a>{" "}
