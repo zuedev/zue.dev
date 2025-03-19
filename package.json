@@ -1,5 +1,4 @@
 {
-  "name": "my-app",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify"

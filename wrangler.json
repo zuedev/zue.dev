@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "api-zue-dev",
-  "main": "src/index.ts",
+  "main": "source/index.js",
   "compatibility_date": "2025-02-05",
   "routes": [
     {
