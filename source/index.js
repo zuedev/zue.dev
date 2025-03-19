@@ -1,19 +1,21 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
+import service_status from "./library/service_status";
+
 const app = new Hono();
 
-// unlock cors for all routes
+// enable cors for all routes
 app.use("*", cors());
 
-// return a simple message
+// return a simple hello world message
 app.get("/", (context) => {
   return context.json({
     message: "Hello, World! :3",
   });
 });
 
-// return own status of the server
+// return status of api itself
 app.get("/status", (context) => {
   return context.json({
     status: "ok",
@@ -24,33 +26,8 @@ app.get("/status", (context) => {
 app.get("/status/:service", (context) => {
   const { service } = context.req.param();
 
-  const acceptedServices = [
-    "dns",
-    "load-balancer",
-    "cdn",
-    "functions",
-    "mysql-cluster",
-    "mongodb-cluster",
-    "redis-cluster",
-    "elasticsearch-cluster",
-    "git-connector",
-    "job-runners",
-    "container-registry",
-    "kubernetes-cluster",
-    "bare-metal-servers",
-    "game-server-api",
-    "anti-ddos-protection",
-    "anti-cheat-api",
-  ];
-
-  if (!acceptedServices.includes(service)) {
-    return context.json(
-      {
-        error: "unknown service",
-      },
-      400
-    );
-  }
+  if (!service_status(service))
+    return context.json({ error: "unknown service" }, 400);
 
   return context.json({
     status: "ok",
