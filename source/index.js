@@ -7,22 +7,22 @@ const app = new Hono();
 app.use("*", cors());
 
 // return a simple message
-app.get("/", (c) => {
-  return c.json({
+app.get("/", (context) => {
+  return context.json({
     message: "Hello, World! :3",
   });
 });
 
 // return own status of the server
-app.get("/status", (c) => {
-  return c.json({
+app.get("/status", (context) => {
+  return context.json({
     status: "ok",
   });
 });
 
 // return status of a given service
-app.get("/status/:service", (c) => {
-  const { service } = c.req.param();
+app.get("/status/:service", (context) => {
+  const { service } = context.req.param();
 
   const acceptedServices = [
     "dns",
@@ -44,7 +44,7 @@ app.get("/status/:service", (c) => {
   ];
 
   if (!acceptedServices.includes(service)) {
-    return c.json(
+    return context.json(
       {
         error: "unknown service",
       },
@@ -52,7 +52,7 @@ app.get("/status/:service", (c) => {
     );
   }
 
-  return c.json({
+  return context.json({
     status: "ok",
   });
 });
