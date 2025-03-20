@@ -1,45 +1,51 @@
-import { Hono } from "hono";
-import { cors } from "hono/cors";
-import { prettyJSON } from "hono/pretty-json";
-import { requestId } from "hono/request-id";
+export default {
+  async fetch(request, environment, context) {
+    const url = new URL(request.url);
 
-import service_status from "./library/service_status";
+    switch (url.pathname) {
+      // return a simple hello world message
+      case "/":
+        return Response.json({
+          message: "Hello, World! :3",
+        });
 
-const app = new Hono();
+      // return status of a given service
+      case "/status":
+        const service = url.searchParams.get("service");
 
-// enable cors for all routes
-app.use(cors());
+        const acceptedServices = [
+          "dns",
+          "load-balancer",
+          "cdn",
+          "functions",
+          "mysql-cluster",
+          "mongodb-cluster",
+          "redis-cluster",
+          "elasticsearch-cluster",
+          "git-connector",
+          "job-runners",
+          "container-registry",
+          "kubernetes-cluster",
+          "bare-metal-servers",
+          "game-server-api",
+          "anti-ddos-protection",
+          "anti-cheat-api",
+        ];
 
-// pretty print json responses
-app.use(prettyJSON());
+        if (acceptedServices.includes(service))
+          return Response.json({
+            status: "ok",
+          });
 
-// add a request id to all requests
-app.use(requestId());
+        return Response.json({
+          error: `service not found`,
+        });
 
-// return a simple hello world message
-app.get("/", (context) => {
-  return context.json({
-    message: "Hello, World! :3",
-  });
-});
-
-// return status of api itself
-app.get("/status", (context) => {
-  return context.json({
-    status: "ok",
-  });
-});
-
-// return status of a given service
-app.get("/status/:service", (context) => {
-  const { service } = context.req.param();
-
-  if (!service_status(service))
-    return context.json({ error: "unknown service" }, 400);
-
-  return context.json({
-    status: "ok",
-  });
-});
-
-export default app;
+      // default case
+      default:
+        return Response.json({
+          error: "not found",
+        });
+    }
+  },
+};
