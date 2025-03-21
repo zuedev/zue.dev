@@ -1,3 +1,5 @@
+import talent96 from "./data/talent96.js";
+
 export default {
   async fetch(request, environment, context) {
     const url = new URL(request.url);
@@ -41,6 +43,33 @@ export default {
           error: `service not found`,
         });
 
+      // check if twitch user is streaming from a whitelist
+      case "/96/twitch/streaming":
+        const channel = url.searchParams.get("channel");
+
+        if (!channel)
+          return Respond({
+            error: `channel not provided`,
+          });
+
+        const whitelist = ["zuedev", ...talent96];
+
+        if (!whitelist.includes(channel))
+          return Respond({
+            error: `channel not whitelisted`,
+          });
+
+        const channelLive = await isTwitchChannelLive(channel);
+
+        if (channelLive)
+          return Respond({
+            status: "live",
+          });
+
+        return Respond({
+          status: "offline",
+        });
+
       // default case
       default:
         return Respond({
@@ -57,4 +86,24 @@ function Respond(body) {
       "Content-Type": "application/json",
     },
   });
+}
+
+/*
+  Checks if a twitch channel is live by fetching the "live" preview image of the channel,
+  if the image is fetched successfully, then the channel is live, otherwise it's offline.
+  
+  @param {string} channel - the twitch channel name
+  @returns {boolean} true if the channel is live, false otherwise
+*/
+async function isTwitchChannelLive(channel) {
+  // construct preview image url with channel name
+  const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel}-320x180.jpg`;
+
+  // fetch the preview image, don't follow redirects
+  const response = await fetch(livePreviewUrl, {
+    redirect: "manual",
+  });
+
+  // check if the image was fetched successfully
+  return response.ok;
 }
