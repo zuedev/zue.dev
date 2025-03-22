@@ -79,6 +79,12 @@ export default {
   },
 };
 
+/*
+  Helper function to respond with a JSON object
+
+  @param {object} body - the JSON object to respond with
+  @returns {Response} a new Response object
+*/
 function Respond(body) {
   return new Response(JSON.stringify(body), {
     headers: {
