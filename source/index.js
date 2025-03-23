@@ -1,4 +1,4 @@
-import Router from "./library/router.js";
+import Router from "./library/router/index.js";
 
 import talent96 from "./data/talent96.js";
 
