@@ -99,6 +99,20 @@ export default {
   async email(message, environment, context) {
     message.forward("alex@zue.dev");
   },
+
+  /*
+    Scheduled event handler, this function will be called whenever a scheduled event is triggered.
+    The function will perform a task and return a response based on the task outcome.
+
+    @param {Event} event - the incoming event object
+    @param {Environment} environment - the environment object
+    @param {Context} context - the context object
+
+    @returns {void}
+  */
+  async scheduled(event, environment, context) {
+    console.log("Scheduled event triggered!");
+  },
 };
 
 /*
