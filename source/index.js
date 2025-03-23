@@ -1,3 +1,5 @@
+import Router from "./library/router.js";
+
 import talent96 from "./data/talent96.js";
 
 export default {
@@ -12,97 +14,78 @@ export default {
     @returns {Response} a new Response object
   */
   async fetch(request, environment, context) {
-    const url = new URL(request.url);
+    const router = new Router(request, environment, context);
 
-    switch (url.pathname) {
-      // return a simple hello world message
-      case "/":
-        return Respond({
-          message: "Hello, World! :3",
+    router.add("/", () => {
+      return router.respond({
+        message: "Hello, World! :3",
+      });
+    });
+
+    router.add("/status", (request) => {
+      const url = new URL(request.url);
+      const service = url.searchParams.get("service");
+
+      const acceptedServices = [
+        "dns",
+        "load-balancer",
+        "cdn",
+        "functions",
+        "mysql-cluster",
+        "mongodb-cluster",
+        "redis-cluster",
+        "elasticsearch-cluster",
+        "git-connector",
+        "job-runners",
+        "container-registry",
+        "kubernetes-cluster",
+        "bare-metal-servers",
+        "game-server-api",
+        "anti-ddos-protection",
+        "anti-cheat-api",
+      ];
+
+      if (acceptedServices.includes(service))
+        return router.respond({
+          status: "ok",
         });
 
-      // return status of a given service
-      case "/status":
-        const service = url.searchParams.get("service");
+      return router.respond({
+        error: `service not found`,
+      });
+    });
 
-        const acceptedServices = [
-          "dns",
-          "load-balancer",
-          "cdn",
-          "functions",
-          "mysql-cluster",
-          "mongodb-cluster",
-          "redis-cluster",
-          "elasticsearch-cluster",
-          "git-connector",
-          "job-runners",
-          "container-registry",
-          "kubernetes-cluster",
-          "bare-metal-servers",
-          "game-server-api",
-          "anti-ddos-protection",
-          "anti-cheat-api",
-        ];
+    router.add("/96/twitch/streaming", async (request) => {
+      const url = new URL(request.url);
+      const channel = url.searchParams.get("channel");
 
-        if (acceptedServices.includes(service))
-          return Respond({
-            status: "ok",
-          });
-
-        return Respond({
-          error: `service not found`,
+      if (!channel)
+        return router.respond({
+          error: `channel not provided`,
         });
 
-      // check if twitch user is streaming from a whitelist
-      case "/96/twitch/streaming":
-        const channel = url.searchParams.get("channel");
+      const whitelist = ["zuedev", ...talent96];
 
-        if (!channel)
-          return Respond({
-            error: `channel not provided`,
-          });
-
-        const whitelist = ["zuedev", ...talent96];
-
-        if (!whitelist.includes(channel))
-          return Respond({
-            error: `channel not whitelisted`,
-          });
-
-        const channelLive = await isTwitchChannelLive(channel);
-
-        if (channelLive)
-          return Respond({
-            status: "live",
-          });
-
-        return Respond({
-          status: "offline",
+      if (!whitelist.includes(channel))
+        return router.respond({
+          error: `channel not whitelisted`,
         });
 
-      // default case
-      default:
-        return Respond({
-          error: "not found",
+      const channelLive = await isTwitchChannelLive(channel);
+
+      if (channelLive)
+        return router.respond({
+          status: "live",
         });
-    }
+
+      return router.respond({
+        status: "offline",
+      });
+    });
+
+    return router.route();
   },
 };
-
-/*
-  Helper function to respond with a JSON object
-
-  @param {object} body - the JSON object to respond with
-  @returns {Response} a new Response object
-*/
-function Respond(body) {
-  return new Response(JSON.stringify(body), {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-    },
-  });
-}
 
 /*
   Checks if a twitch channel is live by fetching the "live" preview image of the channel,
