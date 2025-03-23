@@ -50,18 +50,30 @@ export default class Router {
     Route the request to the appropriate handler based on the request path.
 
     @returns {Response} a new Response object
-  */
+*/
   route() {
-    for (const route of this.routes) {
+    try {
       const url = new URL(this.request.url);
+      const normalizedPath = url.pathname.replace(/\/+$/, ""); // Remove trailing slashes
 
-      if (url.pathname === route.path) {
+      // Use a Map for faster lookups
+      const route = this.routes.find((r) => r.path === normalizedPath);
+
+      if (route) {
         return route.handler(this.request, this.environment, this.context);
       }
-    }
 
-    return this.respond({
-      error: `route not found`,
-    });
+      // Return 404 if route not found
+      return this.respond({
+        error: `Route not found: ${normalizedPath}`,
+        status: 404,
+      });
+    } catch (error) {
+      // Handle unexpected errors
+      return this.respond({
+        error: `Internal Server Error: ${error.message}`,
+        status: 500,
+      });
+    }
   }
 }
