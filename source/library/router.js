@@ -13,6 +13,7 @@ export default class Router {
     this.environment = environment;
     this.context = context;
     this.routes = new Map(); // Use Map for faster lookups
+    this.parameters = {}; // Store extracted route parameters
   }
 
   /*
@@ -32,7 +33,14 @@ export default class Router {
     }
 
     const normalizedPath = path.replace(/\/+$/, ""); // Normalize path
-    this.routes.set(normalizedPath, handler);
+    const pathRegex = new RegExp(
+      "^" +
+        normalizedPath
+          .replace(/:[^/]+/g, "([^/]+)") // Convert :param to regex group
+          .replace(/\//g, "\\/") +
+        "$"
+    );
+    this.routes.set(pathRegex, { handler, originalPath: normalizedPath });
     return this;
   }
 
@@ -63,10 +71,20 @@ export default class Router {
       const url = new URL(this.request.url);
       const normalizedPath = url.pathname.replace(/\/+$/, ""); // Remove trailing slashes
 
-      const handler = this.routes.get(normalizedPath);
+      for (const [pathRegex, { handler, originalPath }] of this.routes) {
+        const match = normalizedPath.match(pathRegex);
+        if (match) {
+          // Extract parameters
+          const paramNames = [...originalPath.matchAll(/:([^/]+)/g)].map(
+            (m) => m[1]
+          );
+          this.parameters = paramNames.reduce((params, name, index) => {
+            params[name] = match[index + 1];
+            return params;
+          }, {});
 
-      if (handler) {
-        return handler(this.request, this.environment, this.context);
+          return handler(this.request, this.environment, this.context);
+        }
       }
 
       // Return 404 if route not found

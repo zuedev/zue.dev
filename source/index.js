@@ -83,6 +83,14 @@ export default {
       });
     });
 
+    router.add("/test/:name", (request) => {
+      const { name } = router.parameters;
+
+      return router.respond({
+        message: `Hello, ${name}! :3`,
+      });
+    });
+
     return router.route();
   },
 };
