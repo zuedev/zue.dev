@@ -85,6 +85,20 @@ export default {
 
     return router.route();
   },
+
+  /*
+    Email event handler, this function will be called whenever an email is sent to the worker.
+    The function will parse the email message and forward it to a specified email address.
+
+    @param {Message} message - the incoming email message object
+    @param {Environment} environment - the environment object
+    @param {Context} context - the context object
+
+    @returns {void}
+  */
+  async email(message, environment, context) {
+    message.forward("alex@zue.dev");
+  },
 };
 
 /*
