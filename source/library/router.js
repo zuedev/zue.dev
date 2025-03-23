@@ -12,7 +12,7 @@ export default class Router {
     this.request = request;
     this.environment = environment;
     this.context = context;
-    this.routes = [];
+    this.routes = new Map(); // Use Map for faster lookups
   }
 
   /*
@@ -24,21 +24,28 @@ export default class Router {
     @returns {Router} the router object
   */
   add(path, handler) {
-    return this.routes.push({
-      path,
-      handler,
-    });
+    if (typeof path !== "string") {
+      throw new TypeError("Path must be a string");
+    }
+    if (typeof handler !== "function") {
+      throw new TypeError("Handler must be a function");
+    }
+
+    const normalizedPath = path.replace(/\/+$/, ""); // Normalize path
+    this.routes.set(normalizedPath, handler);
+    return this;
   }
 
   /*
-    Helper function to respond with a JSON object
+    Helper function to respond with a JSON object.
 
     @param {object} body - the JSON object to respond with
     
     @returns {Response} a new Response object
   */
-  respond(body) {
+  respond(body, status = 200) {
     return new Response(JSON.stringify(body), {
+      status,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
@@ -50,30 +57,33 @@ export default class Router {
     Route the request to the appropriate handler based on the request path.
 
     @returns {Response} a new Response object
-*/
+  */
   route() {
     try {
       const url = new URL(this.request.url);
       const normalizedPath = url.pathname.replace(/\/+$/, ""); // Remove trailing slashes
 
-      // Use a Map for faster lookups
-      const route = this.routes.find((r) => r.path === normalizedPath);
+      const handler = this.routes.get(normalizedPath);
 
-      if (route) {
-        return route.handler(this.request, this.environment, this.context);
+      if (handler) {
+        return handler(this.request, this.environment, this.context);
       }
 
       // Return 404 if route not found
-      return this.respond({
-        error: `Route not found: ${normalizedPath}`,
-        status: 404,
-      });
+      return this.respond(
+        {
+          error: `Route not found: ${normalizedPath}`,
+        },
+        404
+      );
     } catch (error) {
       // Handle unexpected errors
-      return this.respond({
-        error: `Internal Server Error: ${error.message}`,
-        status: 500,
-      });
+      return this.respond(
+        {
+          error: `Internal Server Error: ${error.message}`,
+        },
+        500
+      );
     }
   }
 }
