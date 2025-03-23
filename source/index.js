@@ -1,6 +1,16 @@
 import talent96 from "./data/talent96.js";
 
 export default {
+  /*
+    Fetch event handler, this function will be called whenever a request is made to the worker.
+    The function will parse the request and return a response based on the request path.
+
+    @param {Request} request - the incoming request object
+    @param {Environment} environment - the environment object
+    @param {Context} context - the context object
+
+    @returns {Response} a new Response object
+  */
   async fetch(request, environment, context) {
     const url = new URL(request.url);
 
