@@ -18,5 +18,8 @@
   },
   "browser": {
     "binding": "MYBROWSER"
+  },
+  "ai": {
+    "binding": "AI"
   }
 }

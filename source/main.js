@@ -165,17 +165,33 @@ export default {
         })();
       case "/browser-rendering/screenshot":
         return (async () => {
-          const { searchParams } = new URL(request.url);
-          const url = searchParams.get("url");
-          const type = searchParams.get("type") || "webp";
-          const fullPage = searchParams.get("fullPage") !== null;
-          const width = parseInt(searchParams.get("width"), 10) || 1920;
-          const height = parseInt(searchParams.get("height"), 10) || 1080;
+          /*
+            Checks if a twitch channel is live by fetching the "live" preview image of the channel,
+            if the image is fetched successfully, then the channel is live, otherwise it's offline.
 
-          if (!url)
+            @param {string} channel - the twitch channel name
+            @returns {boolean} true if the channel is live, false otherwise
+          */
+          async function isTwitchChannelLive(channel) {
+            // construct preview image url with channel name
+            const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel}-320x180.jpg`;
+
+            // fetch the preview image, don't follow redirects
+            const response = await fetch(livePreviewUrl, {
+              redirect: "manual",
+            });
+
+            // check if the image was fetched successfully
+            return response.ok;
+          }
+
+          const url = new URL(request.url);
+          const channel = url.searchParams.get("channel");
+
+          if (!channel)
             return new Response(
               JSON.stringify({
-                error: "URL parameter is required",
+                error: `channel not provided`,
               }),
               {
                 headers: {
@@ -185,10 +201,15 @@ export default {
               }
             );
 
-          if (!/^https?:\/\//.test(url))
+          const whitelist = [
+            "zuedev",
+            ...["vtsweets", "bunnibana", "yayjaybae", "justawoney", "tygiwygi"],
+          ];
+
+          if (!whitelist.includes(channel))
             return new Response(
               JSON.stringify({
-                error: "Invalid URL format",
+                error: `channel not whitelisted`,
               }),
               {
                 headers: {
@@ -198,19 +219,92 @@ export default {
               }
             );
 
-          const browser = await puppeteer.launch(environment.MYBROWSER);
-          const page = await browser.newPage();
-          await page.setViewport({ width, height });
-          await page.goto(url);
-          const screenshot = await page.screenshot({
-            type,
-            fullPage,
-          });
-          await browser.close();
+          const channelLive = await isTwitchChannelLive(channel);
 
-          return new Response(screenshot, {
+          if (channelLive)
+            return new Response(
+              JSON.stringify({
+                status: "live",
+                channel,
+              }),
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+          return new Response(
+            JSON.stringify({
+              status: "offline",
+            }),
+            {
+              headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+              },
+            }
+          );
+        })();
+      case "/ai/image":
+        return (async () => {
+          const url = new URL(request.url);
+          const prompt = url.searchParams.get("prompt");
+
+          if (!prompt)
+            return new Response(
+              JSON.stringify({
+                error: `prompt not provided`,
+              }),
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+          if (prompt.length > 2048)
+            return new Response(
+              JSON.stringify({
+                error: `prompt too long, max 2048 characters`,
+              }),
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+          if (prompt.length < 5)
+            return new Response(
+              JSON.stringify({
+                error: `prompt too short, min 5 characters`,
+              }),
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+          const response = await environment.AI.run(
+            "@cf/black-forest-labs/flux-1-schnell",
+            {
+              prompt,
+            }
+          );
+
+          const binaryString = atob(response.image);
+
+          const img = Uint8Array.from(binaryString, (m) => m.codePointAt(0));
+
+          return new Response(img, {
             headers: {
-              "content-type": `image/${type}`,
+              "Content-Type": "image/webp",
             },
           });
         })();
