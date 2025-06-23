@@ -1,5 +1,8 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "compatibility_date": "2025-02-05",
   "name": "api-zue-dev",
   "main": "source/index.js",
@@ -12,5 +15,8 @@
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1
+  },
+  "browser": {
+    "binding": "MYBROWSER"
   }
 }

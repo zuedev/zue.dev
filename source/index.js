@@ -1,5 +1,5 @@
+import puppeteer from "@cloudflare/puppeteer";
 import Router from "./library/router/index.js";
-
 import talent96 from "./data/talent96.js";
 
 export default {
@@ -100,6 +100,41 @@ export default {
 
       return router.respond({
         status: "offline",
+      });
+    });
+
+    router.add("/browser-rendering/screenshot", async (request) => {
+      const { searchParams } = new URL(request.url);
+      const url = searchParams.get("url");
+      const type = searchParams.get("type") || "webp";
+      const fullPage = searchParams.get("fullPage") !== null;
+      const width = parseInt(searchParams.get("width"), 10) || 1920;
+      const height = parseInt(searchParams.get("height"), 10) || 1080;
+
+      if (!url)
+        return router.respond({
+          error: "URL parameter is required",
+        });
+
+      if (!/^https?:\/\//.test(url))
+        return router.respond({
+          error: "Invalid URL format",
+        });
+
+      const browser = await puppeteer.launch(environment.MYBROWSER);
+      const page = await browser.newPage();
+      await page.setViewport({ width, height });
+      await page.goto(url);
+      const screenshot = await page.screenshot({
+        type,
+        fullPage,
+      });
+      await browser.close();
+
+      return new Response(screenshot, {
+        headers: {
+          "content-type": `image/${type}`,
+        },
       });
     });
 

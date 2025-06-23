@@ -1,9 +1,11 @@
 {
   "scripts": {
     "dev": "wrangler dev",
+    "dev:remote": "wrangler dev --remote",
     "deploy": "wrangler deploy --minify"
   },
   "devDependencies": {
+    "@cloudflare/puppeteer": "^1.0.2",
     "wrangler": "^3.101.0"
   }
 }
