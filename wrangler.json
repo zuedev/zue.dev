@@ -5,7 +5,7 @@
   ],
   "compatibility_date": "2025-02-05",
   "name": "api-zue-dev",
-  "main": "source/index.js",
+  "main": "source/main.js",
   "routes": [
     {
       "pattern": "api.zue.dev",
