@@ -214,7 +214,6 @@ export default {
             },
           });
         })();
-        break;
       default:
         return new Response(
           JSON.stringify({
