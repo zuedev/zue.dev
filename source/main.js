@@ -247,67 +247,6 @@ export default {
             }
           );
         })();
-      case "/ai/image":
-        return (async () => {
-          const url = new URL(request.url);
-          const prompt = url.searchParams.get("prompt");
-
-          if (!prompt)
-            return new Response(
-              JSON.stringify({
-                error: `prompt not provided`,
-              }),
-              {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-
-          if (prompt.length > 2048)
-            return new Response(
-              JSON.stringify({
-                error: `prompt too long, max 2048 characters`,
-              }),
-              {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-
-          if (prompt.length < 5)
-            return new Response(
-              JSON.stringify({
-                error: `prompt too short, min 5 characters`,
-              }),
-              {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-
-          const response = await environment.AI.run(
-            "@cf/black-forest-labs/flux-1-schnell",
-            {
-              prompt,
-            }
-          );
-
-          const binaryString = atob(response.image);
-
-          const img = Uint8Array.from(binaryString, (m) => m.codePointAt(0));
-
-          return new Response(img, {
-            headers: {
-              "Content-Type": "image/webp",
-            },
-          });
-        })();
       default:
         return new Response(
           JSON.stringify({
