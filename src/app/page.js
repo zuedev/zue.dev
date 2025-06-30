@@ -17,7 +17,10 @@ export default () => {
   return (
     <div className="flex flex-col justify-center min-h-screen bg-black text-white font-mono text-lg">
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <p>I'm working on updating this website with new links.</p>
+        <p>
+          I'm working on updating this website to be a hub for my projects and
+          services.
+        </p>
         <p>In the meantime, here's some links:</p>
         <ul className="list-disc pl-5">
           {links.map((link) => (
