@@ -14,6 +14,22 @@ export default {
   async fetch(request, environment, context) {
     const { pathname } = new URL(request.url);
 
+    // modify Response to handle CORS defaults
+    class Response extends globalThis.Response {
+      constructor(body, init) {
+        super(body, init);
+        this.headers.set("Access-Control-Allow-Origin", "*");
+        this.headers.set(
+          "Access-Control-Allow-Methods",
+          "GET, POST, PUT, DELETE"
+        );
+        this.headers.set(
+          "Access-Control-Allow-Headers",
+          "Content-Type, Authorization"
+        );
+      }
+    }
+
     switch (pathname) {
       case "/":
         return (() => {
