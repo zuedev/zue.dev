@@ -81,26 +81,6 @@ export default {
         })();
       case "/96/twitch/streaming":
         return (async () => {
-          /*
-            Checks if a twitch channel is live by fetching the "live" preview image of the channel,
-            if the image is fetched successfully, then the channel is live, otherwise it's offline.
-
-            @param {string} channel - the twitch channel name
-            @returns {boolean} true if the channel is live, false otherwise
-          */
-          async function isTwitchChannelLive(channel) {
-            // construct preview image url with channel name
-            const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel}-320x180.jpg`;
-
-            // fetch the preview image, don't follow redirects
-            const response = await fetch(livePreviewUrl, {
-              redirect: "manual",
-            });
-
-            // check if the image was fetched successfully
-            return response.ok;
-          }
-
           const url = new URL(request.url);
           const channel = url.searchParams.get("channel");
 
@@ -117,31 +97,12 @@ export default {
               }
             );
 
-          const whitelist = [
-            "zuedev",
-            ...["vtsweets", "bunnibana", "yayjaybae", "justawoney", "tygiwygi"],
-          ];
+          const channelWhitelist = ["@vtsweets"];
 
-          if (!whitelist.includes(channel))
+          if (!channelWhitelist.includes(channel))
             return new Response(
               JSON.stringify({
-                error: `channel not whitelisted`,
-              }),
-              {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-
-          const channelLive = await isTwitchChannelLive(channel);
-
-          if (channelLive)
-            return new Response(
-              JSON.stringify({
-                status: "live",
-                channel,
+                error: `channel not allowed`,
               }),
               {
                 headers: {
@@ -153,7 +114,7 @@ export default {
 
           return new Response(
             JSON.stringify({
-              status: "offline",
+              latestVideoId,
             }),
             {
               headers: {
@@ -171,6 +132,7 @@ export default {
           const fullPage = searchParams.get("fullPage") !== null;
           const width = parseInt(searchParams.get("width"), 10) || 1920;
           const height = parseInt(searchParams.get("height"), 10) || 1080;
+          const delay = parseInt(searchParams.get("delay"), 10) || 0;
 
           if (!url)
             return router.respond({
@@ -185,7 +147,12 @@ export default {
           const browser = await puppeteer.launch(environment.MYBROWSER);
           const page = await browser.newPage();
           await page.setViewport({ width, height });
-          await page.goto(url);
+          await page.goto(url, {
+            waitUntil: "networkidle2",
+          });
+          if (delay > 0) {
+            await new Promise((resolve) => setTimeout(resolve, delay));
+          }
           const screenshot = await page.screenshot({
             type,
             fullPage,
