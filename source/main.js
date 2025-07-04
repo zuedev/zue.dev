@@ -196,9 +196,13 @@ export default {
               }
             );
 
-          const API_Key =
-            environment.GOOGLE_API_KEY_UNRESTRICTED ||
-            (await environment.GOOGLE_API_KEY_UNRESTRICTED.get());
+          let API_Key;
+
+          try {
+            API_Key = await environment.GOOGLE_API_KEY_UNRESTRICTED.get();
+          } catch (error) {
+            API_Key = environment.GOOGLE_API_KEY_UNRESTRICTED;
+          }
 
           if (!API_Key)
             return new Response(
