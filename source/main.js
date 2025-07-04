@@ -81,6 +81,26 @@ export default {
         })();
       case "/96/twitch/streaming":
         return (async () => {
+          /*
+            Checks if a twitch channel is live by fetching the "live" preview image of the channel,
+            if the image is fetched successfully, then the channel is live, otherwise it's offline.
+
+            @param {string} channel - the twitch channel name
+            @returns {boolean} true if the channel is live, false otherwise
+          */
+          async function isTwitchChannelLive(channel) {
+            // construct preview image url with channel name
+            const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel}-320x180.jpg`;
+
+            // fetch the preview image, don't follow redirects
+            const response = await fetch(livePreviewUrl, {
+              redirect: "manual",
+            });
+
+            // check if the image was fetched successfully
+            return response.ok;
+          }
+
           const url = new URL(request.url);
           const channel = url.searchParams.get("channel");
 
@@ -97,12 +117,31 @@ export default {
               }
             );
 
-          const channelWhitelist = ["@vtsweets"];
+          const whitelist = [
+            "zuedev",
+            ...["vtsweets", "bunnibana", "yayjaybae", "justawoney", "tygiwygi"],
+          ];
 
-          if (!channelWhitelist.includes(channel))
+          if (!whitelist.includes(channel))
             return new Response(
               JSON.stringify({
-                error: `channel not allowed`,
+                error: `channel not whitelisted`,
+              }),
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+          const channelLive = await isTwitchChannelLive(channel);
+
+          if (channelLive)
+            return new Response(
+              JSON.stringify({
+                status: "live",
+                channel,
               }),
               {
                 headers: {
@@ -114,7 +153,7 @@ export default {
 
           return new Response(
             JSON.stringify({
-              latestVideoId,
+              status: "offline",
             }),
             {
               headers: {
