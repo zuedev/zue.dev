@@ -166,9 +166,9 @@ export default {
       case "/96/youtube/latest-video":
         return (async () => {
           const url = new URL(request.url);
-          const channel = url.searchParams.get("channel");
+          const channelHandle = url.searchParams.get("channelHandle");
 
-          if (!channel)
+          if (!channelHandle)
             return new Response(
               JSON.stringify({
                 error: `channel not provided`,
@@ -181,9 +181,9 @@ export default {
               }
             );
 
-          const channelWhitelist = ["@vtsweets"];
+          const channelHandleWhitelist = ["@vtsweets"];
 
-          if (!channelWhitelist.includes(channel))
+          if (!channelHandleWhitelist.includes(channelHandle))
             return new Response(
               JSON.stringify({
                 error: `channel not allowed`,
@@ -214,7 +214,7 @@ export default {
             );
 
           const youtubeChannelsListResponse = await fetch(
-            `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=${channel}&key=${API_Key}`
+            `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=${channelHandle}&key=${API_Key}`
           );
 
           const youtubeChannelsList = await youtubeChannelsListResponse.json();
