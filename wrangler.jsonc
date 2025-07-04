@@ -11,9 +11,6 @@
   "browser": {
     "binding": "MYBROWSER"
   },
-  "ai": {
-    "binding": "AI"
-  },
   "env": {
     "production": {
       "routes": [
