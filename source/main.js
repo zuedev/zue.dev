@@ -163,6 +163,105 @@ export default {
             }
           );
         })();
+      case "/96/youtube/latest-video":
+        return (async () => {
+          const url = new URL(request.url);
+          const channel = url.searchParams.get("channel");
+
+          if (!channel)
+            return new Response(
+              JSON.stringify({
+                error: `channel not provided`,
+              }),
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+          const channelWhitelist = ["@vtsweets"];
+
+          if (!channelWhitelist.includes(channel))
+            return new Response(
+              JSON.stringify({
+                error: `channel not allowed`,
+              }),
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+          const API_Key =
+            environment.GOOGLE_API_KEY_UNRESTRICTED ||
+            (await environment.GOOGLE_API_KEY_UNRESTRICTED.get());
+
+          if (!API_Key)
+            return new Response(
+              JSON.stringify({
+                error: `API Key not found`,
+              }),
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+          const youtubeChannelsListResponse = await fetch(
+            `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=${channel}&key=${API_Key}`
+          );
+
+          const youtubeChannelsList = await youtubeChannelsListResponse.json();
+
+          if (youtubeChannelsList.items.length === 0) {
+            return new Response(
+              JSON.stringify({
+                error: `channel not found`,
+              }),
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+          }
+
+          const uploadsPlaylistId =
+            youtubeChannelsList.items[0].contentDetails.relatedPlaylists
+              .uploads;
+
+          const youtubePlaylistItemsList = await fetch(
+            `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=1&key=${API_Key}`
+          );
+
+          const youtubePlaylistItemsListData =
+            await youtubePlaylistItemsList.json();
+
+          if (youtubePlaylistItemsListData.items.length === 0) {
+            return new Response(
+              JSON.stringify({
+                error: `no videos found in the channel`,
+              }),
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+          }
+
+          return new Response(
+            youtubePlaylistItemsListData.items[0].snippet.resourceId.videoId
+          );
+        })();
       case "/browser-rendering/screenshot":
         return (async () => {
           const { searchParams } = new URL(request.url);

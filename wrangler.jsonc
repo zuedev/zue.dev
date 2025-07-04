@@ -1,8 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
   "compatibility_date": "2025-02-05",
   "name": "api-zue-dev",
   "main": "source/main.js",
@@ -21,5 +19,16 @@
   },
   "ai": {
     "binding": "AI"
+  },
+  "env": {
+    "production": {
+      "secrets_store_secrets": [
+        {
+          "binding": "GOOGLE_API_KEY_UNRESTRICTED",
+          "store_id": "df48b01a29a44fe59118b31da3abacbd",
+          "secret_name": "google-api-key-unrestricted"
+        }
+      ]
+    }
   }
 }
