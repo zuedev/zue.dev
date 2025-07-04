@@ -4,6 +4,12 @@
   "compatibility_date": "2025-02-05",
   "name": "api-zue-dev",
   "main": "source/main.js",
+  "routes": [
+    {
+      "pattern": "api.zue.dev",
+      "custom_domain": true
+    }
+  ],
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1
@@ -11,21 +17,14 @@
   "browser": {
     "binding": "MYBROWSER"
   },
-  "env": {
-    "production": {
-      "routes": [
-        {
-          "pattern": "api.zue.dev",
-          "custom_domain": true
-        }
-      ],
-      "secrets_store_secrets": [
-        {
-          "binding": "GOOGLE_API_KEY_UNRESTRICTED",
-          "store_id": "df48b01a29a44fe59118b31da3abacbd",
-          "secret_name": "google-api-key-unrestricted"
-        }
-      ]
+  "ai": {
+    "binding": "AI"
+  },
+  "secrets_store_secrets": [
+    {
+      "binding": "GOOGLE_API_KEY_UNRESTRICTED",
+      "store_id": "df48b01a29a44fe59118b31da3abacbd",
+      "secret_name": "google-api-key-unrestricted"
     }
-  }
+  ]
 }
