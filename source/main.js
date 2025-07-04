@@ -19,14 +19,8 @@ export default {
       constructor(body, init) {
         super(body, init);
         this.headers.set("Access-Control-Allow-Origin", "*");
-        this.headers.set(
-          "Access-Control-Allow-Methods",
-          "GET, POST, PUT, DELETE"
-        );
-        this.headers.set(
-          "Access-Control-Allow-Headers",
-          "Content-Type, Authorization"
-        );
+        this.headers.set("Access-Control-Allow-Methods", "*");
+        this.headers.set("Access-Control-Allow-Headers", "*");
       }
     }
 
