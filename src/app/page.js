@@ -5,11 +5,11 @@ const links = [
   },
   {
     href: "https://t1.zue.dev",
-    text: "Termina One: Hosting Service",
+    text: "T1: Zero-Markup Development & Hosting",
   },
   {
     href: "https://96.zue.dev",
-    text: "96: Where creatives thrive",
+    text: "96: Transparent Talent Management",
   },
 ];
 
