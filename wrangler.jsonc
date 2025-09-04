@@ -6,7 +6,7 @@
     "directory": "./public/",
     "not_found_handling": "single-page-application",
     "binding": "ASSETS",
-    "run_worker_first": ["/api/*", "!/api/docs/*"]
+    "run_worker_first": ["/api", "/api/*", "!/api/docs/*"]
   },
   "observability": {
     "enabled": true
