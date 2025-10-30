@@ -30,6 +30,7 @@ export default {
           return new Response(
             JSON.stringify({
               message: "Hello, World! :3",
+              random: `${Math.random()}`,
             }),
             {
               headers: {
