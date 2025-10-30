@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./bbg-logo.png" type="image/png" />
+    <title>Blue Bean Games</title>
+    <meta
+      name="description"
+      content="Blue Bean Games is a newly-formed game studio that believes in the power of open-source software. All of our work is completely dedicated to the public domain from company literature to video games."
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+
+      html {
+        background-color: #006eff;
+        color: white;
+      }
+
+      html::-webkit-scrollbar {
+        display: none;
+      }
+
+      .itim-regular {
+        font-family: "Itim", cursive;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        height: 100vh;
+
+        font-family: monospace;
+
+        max-width: 720px;
+        width: 100%;
+        margin: auto;
+
+        opacity: 0;
+        animation: fadeIn 1s ease-in-out forwards;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      p {
+        font-size: 2rem;
+        text-align: justify;
+        padding: 1rem;
+      }
+
+      span {
+        text-align: right;
+        padding: 1rem;
+        opacity: 0.5;
+      }
+
+      a {
+        color: white;
+        text-decoration: dotted underline;
+      }
+
+      a:hover {
+        color: gold;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body class="itim-regular">
+    <p>
+      Blue Bean Games is a newly-formed game studio that believes in the power
+      of open-source software. All of our work is completely dedicated to the
+      public domain from company literature to video games.
+    </p>
+    <span>
+      "Blue Bean Games" is made with ❤️ by
+      <a href="https://zue.dev" target="_blank">zue.dev</a>
+    </span>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>zuedev's space</title>
+    <meta name="description" content="Hello, World! I'm zuedev." />
+    <link rel="icon" href="https://about.zue.dev/avatar.png" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <div
+      class="flex flex-col justify-center min-h-screen bg-black text-white font-mono text-lg"
+    >
+      <div class="max-w-2xl mx-auto px-4 py-8 space-y-4">
+        <p>
+          I'm working on updating this website to be a hub for my projects and
+          services.
+        </p>
+        <p>In the meantime, here's some links:</p>
+        <ul class="list-disc pl-5">
+          <li>
+            <a
+              href="https://about.zue.dev"
+              class="text-cyan-500 hover:underline"
+            >
+              About Me
+            </a>
+          </li>
+          <li>
+            <a href="https://t1.zue.dev" class="text-cyan-500 hover:underline">
+              T1: Zero-Markup Development & Hosting
+            </a>
+          </li>
+          <li>
+            <a href="https://96.zue.dev" class="text-cyan-500 hover:underline">
+              96: Transparent Talent Management
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+  <script>
+    // animated tab
+    const animation = [
+      {
+        emoji: "❤️",
+        title: "Welcome to zuedev's space",
+      },
+    ];
+
+    let tabAnimationStep = 0;
+    const favicon = document.querySelector("link[rel='icon']");
+    const updateTab = () => {
+      const currentAnimation = animation[tabAnimationStep % animation.length];
+      favicon.href = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${currentAnimation.emoji}</text></svg>`;
+      document.title = currentAnimation.title;
+      tabAnimationStep++;
+      setTimeout(updateTab, 1000);
+    };
+
+    updateTab();
+  </script>
+</html>
