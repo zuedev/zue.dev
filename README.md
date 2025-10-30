@@ -1,5 +1,7 @@
-# api.zue.dev
+# [api.zue.dev](https://api.zue.dev/)
+
+> [@zuedev](https://github.com/zuedev)'s public API to support personal projects
 
 ## Development
 
-**This project is mirrored!** Please do not push directly to this repository. Instead, format your changes using [`git format-patch`](https://git-scm.com/docs/git-format-patch) and send them to me via [email](mailto:git@zue.dev) or [Discord](https://discord.com/users/723361818940276736).
+This project uses [Wrangler](https://github.com/cloudflare/workers-sdk) to test and deploy versions. Use `wrangler dev` to test and `wrangler deploy` to deploy new versions.
