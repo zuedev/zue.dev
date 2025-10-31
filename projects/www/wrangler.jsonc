@@ -1,7 +1,9 @@
 {
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_date": "2025-02-05",
   "name": "zue-dev",
-  "compatibility_date": "2025-03-01",
-  "main" : "./server/index.js",
+  "main": "./server/index.js",
   "assets": {
     "directory": "./public/",
     "not_found_handling": "single-page-application",
@@ -14,6 +16,19 @@
     {
       "pattern": "zue.dev",
       "custom_domain": true
+    }
+  ],
+  "browser": {
+    "binding": "MYBROWSER"
+  },
+  "ai": {
+    "binding": "AI"
+  },
+  "secrets_store_secrets": [
+    {
+      "binding": "GOOGLE_API_KEY_UNRESTRICTED",
+      "store_id": "df48b01a29a44fe59118b31da3abacbd",
+      "secret_name": "google-api-key-unrestricted"
     }
   ]
 }
