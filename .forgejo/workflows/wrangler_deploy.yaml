@@ -1,0 +1,22 @@
+name: Deploy Wrangler Project
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: docker
+    container:
+      image: node:25
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name:
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx wrangler deploy
