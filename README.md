@@ -2,6 +2,6 @@
 
 > My ever-changing domain stuff
 
-## Development
+Find it at: https://zue.dev
 
-This is a [monorepo](projects/)!
+Or, if I'm dead, it will (hopefully) be at: https://zuedev.github.io/zue.dev/

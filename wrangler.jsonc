@@ -5,9 +5,10 @@
   "name": "zue-dev",
   "main": "./server/index.js",
   "assets": {
-    "directory": "./public/",
+    "directory": "./dist/",
     "not_found_handling": "single-page-application",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
+    "run_worker_first": true
   },
   "observability": {
     "enabled": true
@@ -15,6 +16,22 @@
   "routes": [
     {
       "pattern": "zue.dev",
+      "custom_domain": true
+    },
+    {
+      "pattern": "api.zue.dev",
+      "custom_domain": true
+    },
+    {
+      "pattern": "bbg.zue.dev",
+      "custom_domain": true
+    },
+    {
+      "pattern": "96.zue.dev",
+      "custom_domain": true
+    },
+    {
+      "pattern": "about.zue.dev",
       "custom_domain": true
     }
   ],
