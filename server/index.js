@@ -14,6 +14,21 @@ export default {
   async fetch(request, environment, context) {
     const url = new URL(request.url);
 
+    if (url.hostname === "api.zue.dev")
+      return Response.redirect(
+        `https://zue.dev/api/${url.pathname}${url.search}`,
+        301
+      );
+
+    if (url.hostname === "96.zue.dev")
+      return Response.redirect(`https://zue.dev/96/${url.pathname}`, 301);
+
+    if (url.hostname === "about.zue.dev")
+      return Response.redirect(`https://zue.dev/about/${url.pathname}`, 301);
+
+    if (url.hostname === "bbg.zue.dev")
+      return Response.redirect(`https://zue.dev/bbg/${url.pathname}`, 301);
+
     if (url.pathname.startsWith("/api")) {
       const pathname = url.pathname.replace("/api", "");
 
