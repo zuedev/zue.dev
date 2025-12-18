@@ -29,6 +29,20 @@ export default {
     if (url.hostname === "bbg.zue.dev")
       return Response.redirect(`https://zue.dev/bbg/${url.pathname}`, 301);
 
+    if (url.pathname === "/shadow-vrchat.ps1") {
+      // fetch the script first
+      const scriptResponse = await fetch(
+        "https://raw.githubusercontent.com/zuedev/monorepo/main/unsorted/Shadow%20VRChat%20Devbox/setup.ps1"
+      );
+
+      // return the script with the correct content-type
+      return new Response(scriptResponse.body, {
+        headers: {
+          "Content-Type": "application/octet-stream",
+        },
+      });
+    }
+
     if (url.pathname.startsWith("/api")) {
       const pathname = url.pathname.replace("/api", "");
 
