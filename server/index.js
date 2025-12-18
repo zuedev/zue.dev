@@ -35,10 +35,10 @@ export default {
         "https://raw.githubusercontent.com/zuedev/monorepo/main/unsorted/Shadow%20VRChat%20Devbox/setup.ps1"
       );
 
-      // return the script with the correct content-type
+      // return the script as text/plain
       return new Response(scriptResponse.body, {
         headers: {
-          "Content-Type": "application/octet-stream",
+          "Content-Type": "text/plain",
         },
       });
     }
