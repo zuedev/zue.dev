@@ -1,6 +1,46 @@
 import puppeteer from "@cloudflare/puppeteer";
 
 const configuration = {
+  /* An array of redirect objects that define domain-based redirects.
+   *
+   * Each redirect object must contain the following properties:
+   * - domain: The source domain to match.
+   * - destination: The target URL to redirect to.
+   *
+   * Optional properties:
+   * - appendPath: If true, appends the original request path to the destination URL.
+   * - appendQuery: If true, appends the original request query string to the destination URL.
+   */
+  redirects: [
+    {
+      domain: "api.zue.dev",
+      destination: "https://zue.dev/api/",
+      appendPath: true,
+      appendQuery: true,
+    },
+    {
+      domain: "96.zue.dev",
+      destination: "https://zue.dev/96/",
+      appendPath: true,
+    },
+    {
+      domain: "about.zue.dev",
+      destination: "https://zue.dev/about/",
+      appendPath: true,
+    },
+    {
+      domain: "bbg.zue.dev",
+      destination: "https://zue.dev/bbg/",
+      appendPath: true,
+    },
+  ],
+  /* An array of rewrite objects that define domain and path-based rewrites.
+   *
+   * Each rewrite object must contain the following properties:
+   * - domain: The source domain to match.
+   * - path: The source path to match.
+   * - destination: The target URL to fetch and serve the content from.
+   */
   rewrites: [
     {
       domain: "zue.dev",
@@ -25,20 +65,24 @@ export default {
   async fetch(request, environment, context) {
     const url = new URL(request.url);
 
-    if (url.hostname === "api.zue.dev")
-      return Response.redirect(
-        `https://zue.dev/api/${url.pathname}${url.search}`,
-        301
+    // Handle redirects from configuration object
+    if (
+      configuration.redirects &&
+      configuration.redirects.length > 0 &&
+      configuration.redirects.some((r) => r.domain === url.hostname)
+    ) {
+      const redirect = configuration.redirects.find(
+        (r) => r.domain === url.hostname
       );
 
-    if (url.hostname === "96.zue.dev")
-      return Response.redirect(`https://zue.dev/96/${url.pathname}`, 301);
+      let destination = redirect.destination;
 
-    if (url.hostname === "about.zue.dev")
-      return Response.redirect(`https://zue.dev/about/${url.pathname}`, 301);
+      if (redirect.appendPath) destination += url.pathname;
 
-    if (url.hostname === "bbg.zue.dev")
-      return Response.redirect(`https://zue.dev/bbg/${url.pathname}`, 301);
+      if (redirect.appendQuery) destination += url.search;
+
+      return Response.redirect(destination, 301);
+    }
 
     // Handle rewrites from configuration object
     if (
