@@ -1,5 +1,16 @@
 import puppeteer from "@cloudflare/puppeteer";
 
+const configuration = {
+  rewrites: [
+    {
+      domain: "zue.dev",
+      path: "/shadow-vrchat.ps1",
+      destination:
+        "https://raw.githubusercontent.com/zuedev/monorepo/main/unsorted/Shadow%20VRChat%20Devbox/setup.ps1",
+    },
+  ],
+};
+
 export default {
   /*
     Fetch event handler, this function will be called whenever a request is made to the worker.
@@ -29,16 +40,23 @@ export default {
     if (url.hostname === "bbg.zue.dev")
       return Response.redirect(`https://zue.dev/bbg/${url.pathname}`, 301);
 
-    if (url.pathname === "/shadow-vrchat.ps1") {
-      // fetch the script first
-      const scriptResponse = await fetch(
-        "https://raw.githubusercontent.com/zuedev/monorepo/main/unsorted/Shadow%20VRChat%20Devbox/setup.ps1"
+    // Handle rewrites from configuration object
+    if (
+      configuration.rewrites &&
+      configuration.rewrites.length > 0 &&
+      configuration.rewrites.some((r) => r.domain === url.hostname) &&
+      configuration.rewrites.some((r) => r.path === url.pathname)
+    ) {
+      const rewrite = configuration.rewrites.find(
+        (r) => r.domain === url.hostname && r.path === url.pathname
       );
 
-      // return the script as text/plain
-      return new Response(scriptResponse.body, {
+      const fetchResponse = await fetch(rewrite.destination);
+
+      return new Response(fetchResponse.body, {
         headers: {
-          "Content-Type": "text/plain",
+          "Content-Type":
+            fetchResponse.headers.get("Content-Type") || "text/plain",
         },
       });
     }
