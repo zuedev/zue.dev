@@ -5,7 +5,7 @@
     "build:about": "npm install --prefix source/about && npm run build --prefix source/about && shx mv source/about/out dist/about",
     "copy:public": "shx cp -r public/* dist/",
     "build": "npm-run-all clean build:96 build:about copy:public",
-    "dev": "npx wrangler dev",
+    "dev": "npm run build && npx wrangler dev",
     "dev:remote": "npx wrangler dev --remote",
     "deploy": "npx wrangler deploy --minify"
   },
