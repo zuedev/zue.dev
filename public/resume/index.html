@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alex Pooley's Resume 👨‍💼📄</title>
+    <meta
+      name="description"
+      content="Results-oriented Engineering Leader with over a decade of experience specializing in scalable and redundant system architecture. Demonstrated success leading distributed, cross-functional development teams to deliver world-class technical solutions impacting millions of users, consistently ensuring quality and efficiency in fast-paced settings."
+    />
+    <link rel="icon" href="../assets/images/pro_avatar.png" />
+    <!-- get tailwindcss -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- tailwind config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          fontFamily: {
+            sans: ["Inter"],
+          },
+        },
+      };
+    </script>
+    <!-- do our own styling -->
+    <style>
+      /* import default font */
+      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+      /* setup css vars */
+      :root {
+        --zuedev-purple: #240054;
+      }
+
+      /* define zd stuff */
+      .bg-zd-purple {
+        background-color: var(--zuedev-purple);
+      }
+
+      /* main background */
+      html {
+        background: black;
+      }
+
+      /* disable black background on prints */
+      @media print {
+        html {
+          background: white;
+        }
+      }
+
+      /* make body at least viewport height */
+      body {
+        min-height: 100vh;
+      }
+
+      /* pan stuff */
+      .panText {
+        background: linear-gradient(
+          45deg,
+          #ff1b8d 33%,
+          #ffd800 33%,
+          #ffd800 66%,
+          #21b1ff 66%
+        );
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* rave stuff */
+      .raveBackground {
+        /* rainbow */
+        background: red;
+        animation: raveBackgroundAnimation 1s linear infinite;
+      }
+
+      @keyframes raveBackgroundAnimation {
+        0% {
+          background-color: red;
+        }
+        16.666% {
+          background-color: orange;
+        }
+        33.333% {
+          background-color: yellow;
+        }
+        50% {
+          background-color: green;
+        }
+        66.666% {
+          background-color: blue;
+        }
+        83.333% {
+          background-color: indigo;
+        }
+        100% {
+          background-color: violet;
+        }
+      }
+
+      .raveBackgroundText {
+        background: black;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: raveBackgroundTextAnimation 1s linear infinite;
+      }
+
+      @keyframes raveBackgroundTextAnimation {
+        0% {
+          background-color: black;
+        }
+        16.666% {
+          background-color: black;
+        }
+        33.333% {
+          background-color: black;
+        }
+        50% {
+          background-color: white;
+        }
+        66.666% {
+          background-color: white;
+        }
+        83.333% {
+          background-color: white;
+        }
+        100% {
+          background-color: black;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- twemoji -->
+    <script
+      src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // on load
+      document.addEventListener("ReactDone", async () => {
+        console.log("React done, parsing twemoji");
+
+        // parse twemoji
+        twemoji.parse(document.body, {
+          folder: "svg",
+          ext: ".svg",
+          base: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/",
+        });
+
+        // apply twemoji style fixes
+        document.querySelectorAll("img.emoji").forEach((img) => {
+          img.style.height = "1em";
+          img.style.width = "1em";
+          img.style.margin = "0 0.05em 0 0.1em";
+          img.style.verticalAlign = "-0.1em";
+          img.style.display = "inline";
+        });
+      });
+    </script>
+
+    <!-- load react -->
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+
+    <!-- load babel for jsx support -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- run the resume code -->
+    <script type="text/babel">
+      // https://shields.io/badges/static-badge
+      const skillsBadges = {
+        nodejs: {
+          badgeContent: "Node.js",
+          style: "flat-square",
+          logo: "nodedotjs",
+          logoColor: "white",
+          color: "026e00",
+          link: "https://nodejs.org",
+        },
+        react: {
+          badgeContent: "React",
+          style: "flat-square",
+          logo: "react",
+          logoColor: "white",
+          color: "61dafb",
+          link: "https://reactjs.org",
+        },
+        docker: {
+          badgeContent: "Docker",
+          style: "flat-square",
+          logo: "docker",
+          logoColor: "white",
+          color: "2496ed",
+          link: "https://docker.com",
+        },
+        nextjs: {
+          badgeContent: "Next.js",
+          style: "flat-square",
+          logo: "nextdotjs",
+          logoColor: "white",
+          color: "000000",
+          link: "https://nextjs.org",
+        },
+        tailwindcss: {
+          badgeContent: "Tailwind CSS",
+          style: "flat-square",
+          logo: "tailwindcss",
+          logoColor: "white",
+          color: "38b2ac",
+          link: "https://tailwindcss.com",
+        },
+        mongodb: {
+          badgeContent: "MongoDB",
+          style: "flat-square",
+          logo: "mongodb",
+          logoColor: "white",
+          color: "47a248",
+          link: "https://mongodb.com",
+        },
+        cloudflare: {
+          badgeContent: "Cloudflare",
+          style: "flat-square",
+          logo: "cloudflare",
+          logoColor: "white",
+          color: "f38020",
+          link: "https://cloudflare.com",
+        },
+        vercel: {
+          badgeContent: "Vercel",
+          style: "flat-square",
+          logo: "vercel",
+          logoColor: "white",
+          color: "000000",
+          link: "https://vercel.com",
+        },
+        unity: {
+          badgeContent: "Unity",
+          style: "flat-square",
+          logo: "unity",
+          logoColor: "white",
+          color: "000000",
+          link: "https://unity.com",
+        },
+        csharp: {
+          badgeContent: "C#",
+          style: "flat-square",
+          logo: "csharp",
+          logoColor: "white",
+          color: "239120",
+          link: "https://docs.microsoft.com/en-us/dotnet/csharp/",
+        },
+        golang: {
+          badgeContent: "Go",
+          style: "flat-square",
+          logo: "go",
+          logoColor: "white",
+          color: "00add8",
+          link: "https://golang.org",
+        },
+        aws: {
+          badgeContent: "AWS",
+          style: "flat-square",
+          logo: "amazonaws",
+          logoColor: "white",
+          color: "232f3e",
+          link: "https://aws.amazon.com",
+        },
+        dynamodb: {
+          badgeContent: "DynamoDB",
+          style: "flat-square",
+          logo: "amazonaws",
+          logoColor: "white",
+          color: "4053d6",
+          link: "https://aws.amazon.com/dynamodb",
+        },
+        php: {
+          badgeContent: "PHP",
+          style: "flat-square",
+          logo: "php",
+          logoColor: "white",
+          color: "777bb4",
+          link: "https://php.net",
+        },
+        symfony: {
+          badgeContent: "Symfony",
+          style: "flat-square",
+          logo: "symfony",
+          logoColor: "white",
+          color: "000000",
+          link: "https://symfony.com",
+        },
+        mysql: {
+          badgeContent: "MySQL",
+          style: "flat-square",
+          logo: "mysql",
+          logoColor: "white",
+          color: "4479a1",
+          link: "https://mysql.com",
+        },
+        gcp: {
+          badgeContent: "GCP",
+          style: "flat-square",
+          logo: "googlecloud",
+          logoColor: "white",
+          color: "4285f4",
+          link: "https://cloud.google.com",
+        },
+        kubernetes: {
+          badgeContent: "Kubernetes",
+          style: "flat-square",
+          logo: "kubernetes",
+          logoColor: "white",
+          color: "326ce5",
+          link: "https://kubernetes.io",
+        },
+        wordpress: {
+          badgeContent: "WordPress",
+          style: "flat-square",
+          logo: "wordpress",
+          logoColor: "white",
+          color: "21759b",
+          link: "https://wordpress.org",
+        },
+        apache: {
+          badgeContent: "Apache",
+          style: "flat-square",
+          logo: "apache",
+          logoColor: "white",
+          color: "d22128",
+          link: "https://httpd.apache.org",
+        },
+        nginx: {
+          badgeContent: "NGINX",
+          style: "flat-square",
+          logo: "nginx",
+          logoColor: "white",
+          color: "269539",
+          link: "https://nginx.com",
+        },
+        digitalocean: {
+          badgeContent: "DigitalOcean",
+          style: "flat-square",
+          logo: "digitalocean",
+          logoColor: "white",
+          color: "0080ff",
+          link: "https://digitalocean.com",
+        },
+        html: {
+          badgeContent: "HTML5",
+          style: "flat-square",
+          logo: "html5",
+          logoColor: "white",
+          color: "e34f26",
+          link: "https://html.spec.whatwg.org",
+        },
+        css: {
+          badgeContent: "CSS3",
+          style: "flat-square",
+          logo: "css3",
+          logoColor: "white",
+          color: "1572b6",
+          link: "https://www.w3.org/Style/CSS/Overview.en.html",
+        },
+        javascript: {
+          badgeContent: "JavaScript",
+          style: "flat-square",
+          logo: "javascript",
+          logoColor: "white",
+          color: "f7df1e",
+          link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+        },
+        linux: {
+          badgeContent: "Linux",
+          style: "flat-square",
+          logo: "linux",
+          logoColor: "white",
+          color: "fcc624",
+          link: "https://kernel.org",
+        },
+      };
+
+      const resumeData = {
+        name: "Alex Pooley",
+        bio: [
+          "Cloud Specialist.",
+          "Gaming Enthusiast.",
+          "Open Source Fanatic.",
+        ],
+        about:
+          "Results-oriented Engineering Leader with over a decade of experience specializing in scalable and redundant system architecture. Demonstrated success leading distributed, cross-functional development teams to deliver world-class technical solutions impacting millions of users, consistently ensuring quality and efficiency in fast-paced settings.",
+        title: "Solutions Architect",
+        avatar: "https://zue.dev/pro_avatar.png",
+        status: "Looking for a new challenge.",
+        location: "Harwich, United Kingdom",
+        email: "alex@zue.dev",
+        phone: "+44 7 943 941 456",
+        website: "https://zue.dev",
+        socials: [
+          {
+            href: "https://linkedin.com/in/zuedev",
+            // icon: "https://cdn.simpleicons.org/linkedin",
+            icon: "https://media.licdn.com/dms/image/v2/D4E0BAQFUop5hiHtk0g/company-logo_100_100/company-logo_100_100/0/1719363313093/linkedin_talent_solutions_logo?e=1749686400&v=beta&t=xJ0wC8Lj38RsgAkC9jb7uvFE0hhCKrx74EHPi_rlXxw",
+            title: "LinkedIn",
+          },
+          {
+            href: "https://github.com/zuedev",
+            icon: "https://cdn.simpleicons.org/github",
+            title: "GitHub",
+          },
+          // {
+          //   href: "https://gitlab.sovereign.zue.dev",
+          //   icon: "https://cdn.simpleicons.org/gitlab",
+          //   title: "GitLab",
+          // },
+          {
+            href: "https://zue.dev/discord",
+            icon: "https://cdn.simpleicons.org/discord",
+            title: "Discord",
+          },
+          // {
+          //   href: "https://zuedev.gumroad.com",
+          //   icon: "https://cdn.simpleicons.org/gumroad",
+          //   title: "Gumroad",
+          // },
+        ],
+        career: [
+          {
+            position: "Director of Engineering",
+            company: "Unnamed Group",
+            url: "https://unnamed.group",
+            brief: "Non-Profit Community Builders",
+            start: new Date("2022-12-01"),
+            end: null,
+            type: "Full-Time",
+            location: "Harwich, United Kingdom",
+            skills: [
+              skillsBadges.nodejs,
+              skillsBadges.react,
+              skillsBadges.docker,
+              skillsBadges.nextjs,
+              skillsBadges.tailwindcss,
+              skillsBadges.mongodb,
+              skillsBadges.cloudflare,
+            ],
+            expound: `Architected and directed the technical evolution of community platforms, ensuring scalability and reliability for over 1,000 active users. Led a team of 13 engineers, designers, and moderators, guiding technical decisions, providing mentorship, and fostering an innovative environment. Established best practices for development, deployment (CI/CD), and maintenance, driving projects that measurably improved user engagement and platform performance.`,
+            achievements: [
+              "Directed engineering efforts to develop and scale platform features such as user onboarding, engagement tools, and notification systems, crucial for supporting community growth to over 1,000 active members.",
+              "Led the technical configuration, optimization, and integration of custom bots, API connections, and role automation of the community Discord server, enhancing functionality and contributing to measurable increases in user retention and satisfaction.",
+              "Initiated and led fundraising efforts for charitable causes, raising over $1,000, which significantly contributed to community goodwill and social impact.",
+              "Architected the technical implementation of the Patreon monetization strategy, overseeing API integrations, development of tiered access controls, and automated subscription management features to create a sustainable revenue stream.",
+            ],
+          },
+          {
+            position: "Solutions Architect",
+            company: "November Games",
+            url: "https://novembergames.com",
+            brief: "Game Studio (MMO + SDKs)",
+            start: new Date("2022-02-01"),
+            end: new Date("2022-12-01"),
+            type: "Contract",
+            location: "New Zealand (Remote)",
+            skills: [
+              skillsBadges.nodejs,
+              skillsBadges.unity,
+              skillsBadges.csharp,
+              skillsBadges.golang,
+              skillsBadges.aws,
+              skillsBadges.dynamodb,
+            ],
+            expound: `Led the design and implementation of the backend architecture for an innovative MMO game, ensuring scalability and performance. Developed and released robust SDKs for Unity and Unreal Engine, facilitating seamless integration for other developers into our platform and enhancing the developer experience.`,
+            achievements: [
+              "Engineered and launched a globally-distributed game server with an API, optimizing for high availability and minimal latency.",
+              "Developed a sophisticated ticket-based party system achieving sub-second matchmaking, significantly enhancing player experience.",
+              "Served as a domain expert during strategic meetings with major industry partners including AWS, Twitch, and NVIDIA, driving technical alignment and collaboration.",
+              "Successfully delivered a multifaceted project under stringent deadlines, demonstrating effective project management and problem-solving skills.",
+            ],
+          },
+          {
+            position: "Technical Lead",
+            company: "CORE Data Systems",
+            url: "https://www.coredatasystems.co.uk",
+            brief: "Educational Games Platform",
+            start: new Date("2018-03-01"),
+            end: new Date("2022-02-01"),
+            type: "Full-Time",
+            location: "Colchester, United Kingdom",
+            skills: [
+              skillsBadges.php,
+              skillsBadges.symfony,
+              skillsBadges.nodejs,
+              skillsBadges.react,
+              skillsBadges.mysql,
+              skillsBadges.gcp,
+              skillsBadges.kubernetes,
+            ],
+            expound: `I led the strategic technical direction of the company, spearheading the development of the innovative "CoreSciences" platform. In my role, I managed and coordinated a multidisciplinary team comprising developers, designers, and QA testers to ensure seamless project execution.`,
+            achievements: [
+              "Developed a scalable platform that attracted over 100,000 active users.",
+              "Successfully launched an educational games platform, resulting in high user engagement and positive feedback.",
+              "Implemented a subscription-based monetization strategy, significantly increasing revenue streams.",
+              "Effectively managed and mentored a diverse team of over 10 developers, fostering collaboration and productivity.",
+            ],
+          },
+          {
+            position: "Full Stack Developer",
+            company: "Aspen Woolf",
+            url: "https://aspenwoolf.co.uk",
+            brief: "Real Estate Investment Firm",
+            start: new Date("2017-04-01"),
+            end: new Date("2018-03-01"),
+            type: "Freelance",
+            location: "Manchester, United Kingdom",
+            skills: [
+              skillsBadges.php,
+              skillsBadges.wordpress,
+              skillsBadges.apache,
+              skillsBadges.nginx,
+              skillsBadges.mysql,
+              skillsBadges.digitalocean,
+            ],
+            expound: `Employed by a white-label agency, BayCat, I spearheaded the development and maintenance of a high-traffic WordPress site. My role involved creating custom plugins and themes to enhance functionality and user experience, ensuring the platform remained robust and innovative.`,
+            achievements: [
+              "Engineered and sustained a bespoke WordPress theme, elevating site aesthetics and functionality.",
+              "Designed and launched an innovative property search engine, enhancing user access and discovery.",
+              "Enhanced website SEO and performance, boosting search rankings and reducing load times.",
+              "Supervised a cross-functional team of 2 developers and 1 designer, fostering collaboration and productivity.",
+            ],
+          },
+          {
+            position: "Backend Engineer",
+            company: "World Registration Systems",
+            url: "https://find-and-update.company-information.service.gov.uk/company/06370780",
+            brief: "Event Registration Platform",
+            start: new Date("2016-11-01"),
+            end: new Date("2017-04-01"),
+            type: "Full-Time",
+            location: "London, United Kingdom",
+            skills: [
+              skillsBadges.html,
+              skillsBadges.css,
+              skillsBadges.javascript,
+              skillsBadges.php,
+              skillsBadges.apache,
+              skillsBadges.linux,
+            ],
+            expound: `Spearheaded the development and maintenance of the company's event registration platform, ensuring seamless user experience and system reliability. Developed and implemented custom APIs and integrations with third-party services, including payment processing through WorldPay, enhancing the platform's functionality.`,
+            achievements: [
+              "Led the development of a custom event registration platform, enhancing user engagement and transaction efficiency.",
+              "Successfully integrated with WorldPay to streamline payment processes.",
+              "Optimized platform for SEO and enhanced performance, resulting in increased traffic and user retention.",
+              "Managed and mentored a team of 2 developers, fostering a collaborative and productive work environment.",
+            ],
+          },
+          {
+            position: "Backend Engineer",
+            company: "Peccy Networks",
+            url: "https://web.archive.org/web/20160305203701/http://peccy.net/",
+            brief: "Web Development Agency",
+            start: new Date("2014-07-28"),
+            end: new Date("2016-11-01"),
+            type: "Full-Time",
+            location: "London, United Kingdom",
+            skills: [
+              skillsBadges.html,
+              skillsBadges.css,
+              skillsBadges.javascript,
+              skillsBadges.php,
+              skillsBadges.apache,
+              skillsBadges.mysql,
+            ],
+            expound: `Spearheaded the development and maintenance of the company's client websites, ensuring a seamless user experience across various platforms. Enhanced website functionality by developing custom plugins and themes tailored for WordPress, Joomla, and Magento environments.`,
+            achievements: [
+              "Engineered innovative custom themes and plugins for Content Management Systems (CMS) platforms, significantly enhancing user engagement.",
+              "Optimized website architecture to achieve top SEO rankings and superior performance metrics, boosting client visibility.",
+              "Led and mentored a cross-functional team of 3 developers and 1 designer, fostering a collaborative and efficient work environment.",
+              "Devised and implemented a custom ticketing system, improving the efficiency and responsiveness of client support services.",
+            ],
+          },
+        ],
+        projects: [
+          {
+            name: "World Anvil",
+            brief: "Worldbuilding Platform",
+            url: "https://worldanvil.com",
+            start: new Date("2017-12-01"),
+            end: new Date("2023-02-01"),
+            type: "Professional",
+            contribution:
+              "Enhanced World Anvil, a leading worldbuilding platform for writers, gamers, and creators, by spearheading efforts to achieve 99.9% uptime through innovative DevOps pipelines and advanced monitoring systems. Successfully implemented comprehensive networking and security strategies, resulting in a 30% reduction in security incidents and improved system resilience. Improved platform scalability, supporting a 50% increase in user traffic, and facilitated seamless environment deployments to enhance collaboration and creativity across the community.",
+          },
+        ],
+        certifications: [
+          {
+            issuer: "freeCodeCamp",
+            issuerIcon: "https://cdn.simpleicons.org/freecodecamp",
+            issuerProfile: "https://www.freecodecamp.org/zuedev",
+            title: "Responsive Web Design",
+            url: "https://www.freecodecamp.org/certification/zuedev/responsive-web-design",
+          },
+          {
+            issuer: "freeCodeCamp",
+            issuerIcon: "https://cdn.simpleicons.org/freecodecamp",
+            issuerProfile: "https://www.freecodecamp.org/zuedev",
+            title: "JavaScript Algorithms and Data Structures",
+            url: "https://www.freecodecamp.org/certification/zuedev/javascript-algorithms-and-data-structures",
+          },
+          {
+            issuer: "freeCodeCamp",
+            issuerIcon: "https://cdn.simpleicons.org/freecodecamp",
+            issuerProfile: "https://www.freecodecamp.org/zuedev",
+            title: "Python for Data Science",
+            url: "https://www.freecodecamp.org/certification/zuedev/python-for-data-science",
+          },
+          {
+            issuer: "freeCodeCamp",
+            issuerIcon: "https://cdn.simpleicons.org/freecodecamp",
+            issuerProfile: "https://www.freecodecamp.org/zuedev",
+            title: "Data Visualization",
+            url: "https://www.freecodecamp.org/certification/zuedev/data-visualization",
+          },
+        ],
+      };
+
+      function Resume() {
+        React.useEffect(() => {
+          document.dispatchEvent(new Event("ReactDone"));
+        }, []);
+
+        return (
+          <main className="bg-white min-h-screen p-4 space-y-4 max-w-screen-sm md:max-w-screen-md lg:max-w-[795px] print:max-w-full mx-auto">
+            <div className="raveBackground p-4 text-center text-2xl font-bold print:hidden">
+              ⚠️
+              <span className="raveBackgroundText px-2">
+                This resume is currently a work in progress!
+              </span>
+              ⚠️
+            </div>
+
+            <header className="flex flex-row h-24">
+              <div className="flex flex-row space-x-4 align-middle flex-grow">
+                <img src={resumeData.avatar} alt={resumeData.name} />
+                <div className="flex flex-col place-content-evenly">
+                  {resumeData.bio.map((line, index) => (
+                    <span
+                      key={index}
+                      className="text-xl font-bold text-gray-500"
+                    >
+                      {line}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-col place-content-evenly text-gray-500 text-right">
+                <span>
+                  <a
+                    href={
+                      "https://www.google.co.uk/maps/place/" +
+                      resumeData.location
+                    }
+                    className="text-blue-500 underline decoration-dotted"
+                    target="_blank"
+                  >
+                    {resumeData.location}
+                  </a>{" "}
+                  📍
+                </span>
+                <span>
+                  <a
+                    href={"mailto:" + resumeData.email}
+                    className="text-blue-500 underline decoration-dotted"
+                    target="_blank"
+                  >
+                    {resumeData.email}
+                  </a>{" "}
+                  📧
+                </span>
+                <span>
+                  <a
+                    href={"tel:" + resumeData.phone.replaceAll(" ", "")}
+                    className="text-blue-500 underline decoration-dotted"
+                    target="_blank"
+                  >
+                    {resumeData.phone}
+                  </a>{" "}
+                  📱
+                </span>
+                <span>
+                  <a
+                    href={resumeData.website}
+                    className="text-blue-500 underline decoration-dotted"
+                    target="_blank"
+                  >
+                    {resumeData.website}
+                  </a>{" "}
+                  🌎
+                </span>
+              </div>
+            </header>
+
+            <section className="space-y-4">
+              <div className="flex flex-row text-4xl font-black">
+                <h1 className="bg-zd-purple text-white px-2 py-1">
+                  <span className="panText">{resumeData.name}</span>
+                </h1>
+                <h2 className="bg-black text-white px-2 py-1">
+                  {resumeData.title}
+                </h2>
+              </div>
+              <div>
+                <ul className="flex flex-row h-full items-center">
+                  {resumeData.socials.map((social) => (
+                    <li key={social.href} className="px-2">
+                      <a href={social.href}>
+                        <img
+                          src={`${social.icon}`}
+                          className="h-8"
+                          title={social.title}
+                        />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+
+            <hr />
+
+            <section className="space-y-4">
+              <h3 className="text-4xl font-bold">About</h3>
+              <p className="text-lg text-justify">{resumeData.about}</p>
+            </section>
+
+            <hr />
+
+            <section className="space-y-4">
+              <h3 className="text-4xl font-bold">Career</h3>
+              <ul>
+                {resumeData.career.map((job) => (
+                  <li
+                    key={job.company}
+                    className="space-y-4 border-black border-l-4 px-4 py-4 odd:bg-gray-100"
+                  >
+                    <div className="flex flex-row space-x-4 place-content-between">
+                      <div className="flex flex-col">
+                        <h4 className="text-xl font-bold">{job.position}</h4>
+                        <a
+                          href={job.url}
+                          className="text-lg font-bold text-gray-500 underline"
+                        >
+                          {job.company}
+                        </a>
+                        <p className="text-lg text-gray-500">{job.brief}</p>
+                      </div>
+                      <div className="flex flex-col text-right">
+                        <span>
+                          {job.start.toLocaleDateString("en-GB", {
+                            year: "numeric",
+                            month: "long",
+                          })}
+                          {" - "}
+                          {job.end
+                            ? job.end.toLocaleDateString("en-GB", {
+                                year: "numeric",
+                                month: "long",
+                              })
+                            : "Present"}{" "}
+                          📅
+                        </span>
+                        <span>{job.type} 👔</span>
+                        <span>{job.location} 🏢</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      {/*<span className="text-xl font-bold">Brief</span>*/}
+                      <p className="text-justify">{job.expound}</p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <span className="text-xl font-bold">Achievements</span>
+                      <ul className="ml-8 list-disc">
+                        {job.achievements.map((achievement) => (
+                          <li key={achievement}>{achievement}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="space-y-2">
+                      <span className="text-xl font-bold">Technologies</span>
+                      <p className="flex flex-row space-x-2">
+                        {job.skills.map((skill) => (
+                          <a key={skill.badgeContent} href={skill.link}>
+                            <img
+                              src={`https://img.shields.io/badge/${encodeURIComponent(
+                                skill.badgeContent
+                              )}-${skill.color}?style=${skill.style}&logo=${
+                                skill.logo
+                              }&logoColor=${skill.logoColor}`}
+                              alt={skill.badgeContent}
+                            />
+                          </a>
+                        ))}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <hr />
+
+            <section className="space-y-4">
+              <h3 className="text-4xl font-bold">Projects</h3>
+              <ul>
+                {resumeData.projects.map((project) => (
+                  <li
+                    key={project.name}
+                    className="space-y-4 border-black border-l-4 px-4 py-4 odd:bg-gray-100"
+                  >
+                    <div className="flex flex-row space-x-4 place-content-between">
+                      <div className="flex flex-col">
+                        <h4 className="text-xl font-bold">
+                          <a
+                            href={project.url}
+                            className="text-lg font-bold underline"
+                          >
+                            {project.name}
+                          </a>
+                        </h4>
+                        <p className="text-lg text-gray-500">{project.brief}</p>
+                      </div>
+                      <div className="flex flex-col text-right">
+                        <span>
+                          {project.start.toLocaleDateString("en-GB", {
+                            year: "numeric",
+                            month: "long",
+                          })}
+                          {" - "}
+                          {project.end.toLocaleDateString("en-GB", {
+                            year: "numeric",
+                            month: "long",
+                          })}
+                        </span>
+                        <span>{project.type}</span>
+                      </div>
+                    </div>
+
+                    <p className="text-justify">{project.contribution}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <hr />
+
+            <section className="space-y-4">
+              <h3 className="text-4xl font-bold">Certifications</h3>
+              <ul className="grid grid-cols-3 gap-2">
+                {resumeData.certifications.map((certification) => (
+                  <li
+                    key={certification.title}
+                    className="px-2 py-2 odd:bg-gray-100"
+                  >
+                    <div className="flex flex-col">
+                      <h4 className="text-xl font-bold">
+                        <img
+                          src={certification.issuerIcon}
+                          alt={certification.issuer}
+                          className="h-8"
+                        />
+                        <a
+                          href={certification.url}
+                          target="_blank"
+                          className="text-lg font-bold underline"
+                        >
+                          {certification.title}
+                        </a>
+                      </h4>
+                      <div>
+                        <span>from </span>
+                        <a
+                          href={certification.issuerProfile}
+                          target="_blank"
+                          className="text-lg text-gray-500 underline"
+                        >
+                          {certification.issuer}
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <hr />
+
+            <footer className="text-center text-gray-500 text-sm">
+              <p>
+                This resume was generated by{" "}
+                <a
+                  href="https://zue.dev/resume"
+                  className="text-blue-500 underline decoration-dotted"
+                >
+                  zue.dev/resume
+                </a>
+                ; visit the link for the latest version.
+              </p>
+            </footer>
+          </main>
+        );
+      }
+
+      ReactDOM.createRoot(document.querySelector("#root")).render(<Resume />);
+    </script>
+  </body>
+</html>
