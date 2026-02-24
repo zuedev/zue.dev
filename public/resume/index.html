@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,7 +6,7 @@
     <title>Alex Pooley's Resume 👨‍💼📄</title>
     <meta
       name="description"
-      content="Results-oriented Engineering Leader with over a decade of experience specializing in scalable and redundant system architecture. Demonstrated success leading distributed, cross-functional development teams to deliver world-class technical solutions impacting millions of users, consistently ensuring quality and efficiency in fast-paced settings."
+      content="Results-oriented Software Engineer and Solutions Architect with over 14 years’ experience designing and implementing scalable and redundant system architecture."
     />
     <link rel="icon" href="../assets/images/pro_avatar.png" />
     <!-- get tailwindcss -->
@@ -394,8 +394,11 @@
           "Gaming Enthusiast.",
           "Open Source Fanatic.",
         ],
-        about:
-          "Results-oriented Engineering Leader with over a decade of experience specializing in scalable and redundant system architecture. Demonstrated success leading distributed, cross-functional development teams to deliver world-class technical solutions impacting millions of users, consistently ensuring quality and efficiency in fast-paced settings.",
+        blurbBold: "Results-oriented Software Engineer and Solutions Architect",
+        blurb:
+          "with over 14 years’ experience designing and implementing scalable and redundant system architecture.",
+        summary:
+          "Enthusiastic and accomplished leader of distributed, cross-functional development teams, consistently delivering world-class technical solutions that impact millions of users. Proven ability to ensure quality and efficiency in fast-paced, dynamic environments within the gaming industry. Core strengths include leadership, technical acumen, a drive for impactful solutions, and a commitment to quality and efficiency. Highly adaptable to fast-paced environments and bring a genuine passion for gaming, informing my understanding of user needs and market trends.",
         title: "Solutions Architect",
         avatar: "https://zue.dev/about/pro_avatar.png",
         status: "Looking for a new challenge.",
@@ -635,14 +638,6 @@
 
         return (
           <main className="bg-white min-h-screen p-4 space-y-4 max-w-screen-sm md:max-w-screen-md lg:max-w-[795px] print:max-w-full mx-auto">
-            <div className="raveBackground p-4 text-center text-2xl font-bold print:hidden">
-              ⚠️
-              <span className="raveBackgroundText px-2">
-                This resume is currently a work in progress!
-              </span>
-              ⚠️
-            </div>
-
             <header className="flex flex-row h-24">
               <div className="flex flex-row space-x-4 align-middle flex-grow">
                 <img src={resumeData.avatar} alt={resumeData.name} />
@@ -733,8 +728,14 @@
             <hr />
 
             <section className="space-y-4">
-              <h3 className="text-4xl font-bold">About</h3>
-              <p className="text-lg text-justify">{resumeData.about}</p>
+              <p className="text-lg text-justify">
+                <b>{resumeData.blurbBold}</b> {resumeData.blurb}
+              </p>
+            </section>
+
+            <section className="space-y-4">
+              <h3 className="text-4xl font-bold">Summary</h3>
+              <p className="text-lg text-justify">{resumeData.summary}</p>
             </section>
 
             <hr />
@@ -799,7 +800,7 @@
                           <a key={skill.badgeContent} href={skill.link}>
                             <img
                               src={`https://img.shields.io/badge/${encodeURIComponent(
-                                skill.badgeContent
+                                skill.badgeContent,
                               )}-${skill.color}?style=${skill.style}&logo=${
                                 skill.logo
                               }&logoColor=${skill.logoColor}`}
