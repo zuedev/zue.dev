@@ -7,7 +7,8 @@
     "build": "npm-run-all clean build:96 build:about copy:public",
     "dev": "npm run build && npx wrangler dev",
     "dev:remote": "npx wrangler dev --remote",
-    "deploy": "npx wrangler deploy --minify"
+    "deploy": "npx wrangler deploy --minify",
+    "build+deploy": "npm run build && npm run deploy"
   },
   "dependencies": {
     "@cloudflare/puppeteer": "^1.0.2"
