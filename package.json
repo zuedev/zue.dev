@@ -1,20 +1,6 @@
 {
   "scripts": {
-    "clean": "shx rm -rf dist/ && shx mkdir dist/",
-    "build:96": "npm install --prefix source/96 && npm run build --prefix source/96 && shx mv source/96/out dist/96",
-    "build:about": "npm install --prefix source/about && npm run build --prefix source/about && shx mv source/about/out dist/about",
-    "copy:public": "shx cp -r public/* dist/",
-    "build": "npm-run-all clean build:96 build:about copy:public",
-    "dev": "npm run build && npx wrangler dev",
-    "dev:remote": "npx wrangler dev --remote",
-    "deploy": "npx wrangler deploy --minify",
-    "build+deploy": "npm run build && npm run deploy"
-  },
-  "dependencies": {
-    "@cloudflare/puppeteer": "^1.0.2"
-  },
-  "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "shx": "^0.4.0"
+    "dev": "npx wrangler dev",
+    "deploy": "npx wrangler deploy"
   }
 }

@@ -1,72 +1,135 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>zue.dev</title>
+    <meta
+      name="description"
+      content="Cloud Specialist. Gaming Enthusiast. Open Source Fanatic."
+    />
+    <style>
+      /* import Inter font */
+      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-    <title>zuedev's space</title>
-    <meta name="description" content="Hello, World! I'm zuedev." />
-    <link rel="icon" href="https://about.zue.dev/avatar.png" />
+      /* apply Inter font to entire html document */
+      html {
+        font-family: "Inter";
+      }
 
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+      /* remove margin and padding from body */
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* remove top margin from first-child h1 of element */
+      h1:first-child {
+        margin-top: 0;
+      }
+
+      /* make body full height */
+      body {
+        height: 100vh;
+      }
+
+      /* center content of body using flexbox */
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* fade in animation */
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* fade in body content */
+      body {
+        opacity: 0;
+        animation: fadeIn 1s ease-in-out forwards;
+      }
+
+      /* accomodate dark mode users defaults */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: black;
+          color: white;
+        }
+      }
+
+      /* make text pan :3 */
+      .pan {
+        background: linear-gradient(
+          45deg,
+          #ff1b8d 33%,
+          #ffd800 33%,
+          #ffd800 66%,
+          #21b1ff 66%
+        );
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        /* shrink to fit to fix background */
+        display: inline;
+      }
+
+      /* link styles */
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      a:hover {
+        background: black;
+        color: white;
+
+        @media (prefers-color-scheme: dark) {
+          background: white;
+          color: black;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div
-      class="flex flex-col justify-center min-h-screen bg-black text-white font-mono text-lg"
-    >
-      <div class="max-w-2xl mx-auto px-4 py-8 space-y-4">
-        <p>
-          I'm working on updating this website to be a hub for my projects and
-          services.
-        </p>
-        <p>In the meantime, here's some links:</p>
-        <ul class="list-disc pl-5">
-          <li>
-            <a href="https://t1.zue.dev" class="text-cyan-500 hover:underline">
-              T1: Zero-Markup Development & Hosting
-            </a>
-          </li>
-          <li>
-            <a href="https://96.zue.dev" class="text-cyan-500 hover:underline">
-              96: Transparent Talent Management
-            </a>
-          </li>
-          <li>
-            <a href="https://bbg.zue.dev" class="text-cyan-500 hover:underline">
-              BBG: Open-Source Independent Game Studio
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://about.zue.dev"
-              class="text-cyan-500 hover:underline"
-            >
-              About Me
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" data-type="module">
+      import React from "https://esm.sh/react@18";
+      import ReactDOM from "https://esm.sh/react-dom@18/client";
+
+      ReactDOM.createRoot(document.body).render(
+        <main style={{ maxWidth: "666px", padding: "20px" }}>
+          <h1 className="pan">zuedev</h1>
+          <p
+            style={{
+              textAlign: "justify",
+            }}
+          >
+            Cloud Specialist. Gaming Enthusiast. Open Source Fanatic.
+          </p>
+
+          <article>
+            <h2>Projects</h2>
+            <ul>
+              {[
+                {
+                  name: "Unnamed Group",
+                  url: "https://unnamed.group/",
+                  description: "Non-profit gaming community management",
+                },
+              ].map((project) => (
+                <li key={project.name}>
+                  <a href={project.url}>
+                    {project.name}: {project.description}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </main>,
+      );
+    </script>
   </body>
-  <script>
-    // animated tab
-    const animation = [
-      {
-        emoji: "❤️",
-        title: "Welcome to zuedev's space",
-      },
-    ];
-
-    let tabAnimationStep = 0;
-    const favicon = document.querySelector("link[rel='icon']");
-    const updateTab = () => {
-      const currentAnimation = animation[tabAnimationStep % animation.length];
-      favicon.href = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${currentAnimation.emoji}</text></svg>`;
-      document.title = currentAnimation.title;
-      tabAnimationStep++;
-      setTimeout(updateTab, 1000);
-    };
-
-    updateTab();
-  </script>
 </html>

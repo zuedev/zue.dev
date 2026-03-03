@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Help</title>
+    <style>
+      /* import Inter font */
+      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+      /* apply Inter font to entire html document */
+      html {
+        font-family: "Inter";
+      }
+
+      /* remove margin and padding from body */
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* remove top margin from first-child h1 of element */
+      h1:first-child {
+        margin-top: 0;
+      }
+
+      /* apply light padding to body */
+      body {
+        padding: 20px;
+      }
+
+      /* make all text justified */
+      body {
+        text-align: justify;
+      }
+
+      /* accomodate dark mode users defaults */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: black;
+          color: white;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <p>Coming soon! For now, email us at:</p>
+
+    <p><a href="mailto:help@zue.dev">help@zue.dev</a></p>
+  </body>
+</html>

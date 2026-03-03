@@ -1,53 +1,78 @@
-import puppeteer from "@cloudflare/puppeteer";
-
 const configuration = {
-  /* An array of redirect objects that define domain-based redirects.
-   *
-   * Each redirect object must contain the following properties:
-   * - domain: The source domain to match.
-   * - destination: The target URL to redirect to.
-   *
-   * Optional properties:
-   * - appendPath: If true, appends the original request path to the destination URL.
-   * - appendQuery: If true, appends the original request query string to the destination URL.
-   */
   redirects: [
+    // socials
+    { from: "/github", to: "https://github.com/zuedev" },
+    { from: "/gitlab", to: "https://gitlab.com/zuedev" },
+    { from: "/discord", to: "https://discord.gg/N34EeYtFCs" },
+    { from: "/gumroad", to: "https://zuedev.gumroad.com/" },
+    { from: "/linkedin", to: "https://linkedin.com/in/zuedev" },
+    { from: "/steam", to: "https://steamcommunity.com/id/zuedev" },
+
+    // bank direct pay
+    { from: "/monzo", to: "https://monzo.me/alexanderpooley5" },
+
+    // aws
+    { from: "/aws", to: "https://zuedev.awsapps.com/start" },
+
+    // stripe links
+    { from: "/stripe", to: "/stripe/billing" },
     {
-      domain: "api.zue.dev",
-      destination: "https://zue.dev/api/",
-      appendPath: true,
-      appendQuery: true,
+      from: "/stripe/billing",
+      to: "https://billing.stripe.com/p/login/6oE8Ag4EK2N82OI000",
     },
     {
-      domain: "96.zue.dev",
-      destination: "https://zue.dev/96/",
-      appendPath: true,
+      from: "/donate",
+      to: "/stripe/donate",
     },
     {
-      domain: "about.zue.dev",
-      destination: "https://zue.dev/about/",
-      appendPath: true,
+      from: "/stripe/donate",
+      to: "https://donate.stripe.com/8x2aEW6esd4lfAc75g97G05",
     },
     {
-      domain: "bbg.zue.dev",
-      destination: "https://zue.dev/bbg/",
-      appendPath: true,
+      from: "/pay",
+      to: "/stripe/pay",
     },
-  ],
-  /* An array of rewrite objects that define domain and path-based rewrites.
-   *
-   * Each rewrite object must contain the following properties:
-   * - domain: The source domain to match.
-   * - path: The source path to match.
-   * - destination: The target URL to fetch and serve the content from.
-   */
-  rewrites: [
     {
-      domain: "zue.dev",
-      path: "/shadow-vrchat.ps1",
-      destination:
-        "https://raw.githubusercontent.com/zuedev/monorepo/main/unsorted/Shadow%20VRChat%20Devbox/setup.ps1",
+      from: "/stripe/pay",
+      to: "https://buy.stripe.com/5kQ00i1Yc9S99bOahs97G06",
     },
+    {
+      from: "/stripe/book",
+      to: "https://book.stripe.com/cNi14mfP21lD1Jm61c97G07",
+    },
+
+    // cv/resume links
+    {
+      from: "/cv",
+      to: "https://drive.google.com/file/d/1S49c4nQEpY5IeQNkTcLlnabz664RlnAj/view?usp=sharing",
+    },
+    {
+      from: "/cv.pdf",
+      to: "https://drive.google.com/file/d/1S49c4nQEpY5IeQNkTcLlnabz664RlnAj/view?usp=sharing",
+    },
+    {
+      from: "/resume.pdf",
+      to: "https://drive.google.com/file/d/1S49c4nQEpY5IeQNkTcLlnabz664RlnAj/view?usp=sharing",
+    },
+    {
+      from: "/resume",
+      to: "https://drive.google.com/file/d/1S49c4nQEpY5IeQNkTcLlnabz664RlnAj/view?usp=sharing",
+    },
+
+    // terms
+    { from: "/tos", to: "/terms-of-service/" },
+    { from: "/terms", to: "/terms-of-service/" },
+
+    // privacy
+    { from: "/pp", to: "/privacy-policy/" },
+    { from: "/privacy", to: "/privacy-policy/" },
+
+    // help
+    { from: "/support", to: "/help/" },
+    { from: "/help", to: "/help/" },
+
+    // cal
+    { from: "/cal", to: "https://cal.com/zuedev" },
   ],
 };
 
@@ -63,375 +88,20 @@ export default {
     @returns {Response} a new Response object
   */
   async fetch(request, environment, context) {
-    const url = new URL(request.url);
+    const { pathname } = new URL(request.url);
 
-    // Handle redirects from configuration object
-    if (
-      configuration.redirects &&
-      configuration.redirects.length > 0 &&
-      configuration.redirects.some((r) => r.domain === url.hostname)
-    ) {
-      const redirect = configuration.redirects.find(
-        (r) => r.domain === url.hostname
-      );
-
-      let destination = redirect.destination;
-
-      if (redirect.appendPath) destination += url.pathname;
-
-      if (redirect.appendQuery) destination += url.search;
-
-      return Response.redirect(destination, 301);
-    }
-
-    // Handle rewrites from configuration object
-    if (
-      configuration.rewrites &&
-      configuration.rewrites.length > 0 &&
-      configuration.rewrites.some((r) => r.domain === url.hostname) &&
-      configuration.rewrites.some((r) => r.path === url.pathname)
-    ) {
-      const rewrite = configuration.rewrites.find(
-        (r) => r.domain === url.hostname && r.path === url.pathname
-      );
-
-      const fetchResponse = await fetch(rewrite.destination);
-
-      return new Response(fetchResponse.body, {
-        headers: {
-          "Content-Type":
-            fetchResponse.headers.get("Content-Type") || "text/plain",
-        },
-      });
-    }
-
-    if (url.pathname.startsWith("/api")) {
-      const pathname = url.pathname.replace("/api", "");
-
-      // modify Response to handle CORS defaults
-      class Response extends globalThis.Response {
-        constructor(body, init) {
-          super(body, init);
-          this.headers.set("Access-Control-Allow-Origin", "*");
-          this.headers.set("Access-Control-Allow-Methods", "*");
-          this.headers.set("Access-Control-Allow-Headers", "*");
+    if (configuration.redirects) {
+      for (const redirect of configuration.redirects) {
+        if (pathname === redirect.from || pathname === redirect.from + "/") {
+          return Response.redirect(redirect.to, 301);
         }
       }
+    }
 
-      switch (pathname) {
-        case "/":
-          return (() => {
-            return new Response(
-              JSON.stringify({
-                message: "Hello, World! :3",
-                random: `${Math.random()}`,
-              }),
-              {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-          })();
-        case "/status":
-          return (() => {
-            const url = new URL(request.url);
-            const service = url.searchParams.get("service");
-
-            const acceptedServices = [
-              "dns",
-              "load-balancer",
-              "cdn",
-              "functions",
-              "mysql-cluster",
-              "mongodb-cluster",
-              "redis-cluster",
-              "elasticsearch-cluster",
-              "git-connector",
-              "job-runners",
-              "container-registry",
-              "kubernetes-cluster",
-              "bare-metal-servers",
-              "game-server-api",
-              "anti-ddos-protection",
-              "anti-cheat-api",
-            ];
-
-            if (acceptedServices.includes(service))
-              return new Response(
-                JSON.stringify({
-                  status: "ok",
-                  service,
-                }),
-                {
-                  headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-
-            return new Response(
-              JSON.stringify({
-                error: `service not found`,
-              }),
-              {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-          })();
-        case "/96/twitch/streaming":
-          return (async () => {
-            /*
-              Checks if a twitch channel is live by fetching the "live" preview image of the channel,
-              if the image is fetched successfully, then the channel is live, otherwise it's offline.
-
-              @param {string} channel - the twitch channel name
-              @returns {boolean} true if the channel is live, false otherwise
-            */
-            async function isTwitchChannelLive(channel) {
-              // construct preview image url with channel name
-              const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel}-320x180.jpg`;
-
-              // fetch the preview image, don't follow redirects
-              const response = await fetch(livePreviewUrl, {
-                redirect: "manual",
-              });
-
-              // check if the image was fetched successfully
-              return response.ok;
-            }
-
-            const url = new URL(request.url);
-            const channel = url.searchParams.get("channel");
-
-            if (!channel)
-              return new Response(
-                JSON.stringify({
-                  error: `channel not provided`,
-                }),
-                {
-                  headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-
-            const whitelist = [
-              "zuedev",
-              ...[
-                "vtsweets",
-                "bunnibana",
-                "yayjaybae",
-                "justawoney",
-                "tygiwygi",
-              ],
-            ];
-
-            if (!whitelist.includes(channel))
-              return new Response(
-                JSON.stringify({
-                  error: `channel not whitelisted`,
-                }),
-                {
-                  headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-
-            const channelLive = await isTwitchChannelLive(channel);
-
-            if (channelLive)
-              return new Response(
-                JSON.stringify({
-                  status: "live",
-                  channel,
-                }),
-                {
-                  headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-
-            return new Response(
-              JSON.stringify({
-                status: "offline",
-              }),
-              {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-          })();
-        case "/96/youtube/latest-video":
-          return (async () => {
-            const url = new URL(request.url);
-            const channelHandle = url.searchParams.get("channelHandle");
-
-            if (!channelHandle)
-              return new Response(
-                JSON.stringify({
-                  error: `channel not provided`,
-                }),
-                {
-                  headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-
-            const channelHandleWhitelist = ["@vtsweets"];
-
-            if (!channelHandleWhitelist.includes(channelHandle))
-              return new Response(
-                JSON.stringify({
-                  error: `channel not allowed`,
-                }),
-                {
-                  headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-
-            let API_Key;
-
-            try {
-              API_Key = await environment.GOOGLE_API_KEY_UNRESTRICTED.get();
-            } catch (error) {
-              API_Key = environment.GOOGLE_API_KEY_UNRESTRICTED;
-            }
-
-            if (!API_Key)
-              return new Response(
-                JSON.stringify({
-                  error: `API Key not found`,
-                }),
-                {
-                  headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-
-            const youtubeChannelsListResponse = await fetch(
-              `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=${channelHandle}&key=${API_Key}`
-            );
-
-            const youtubeChannelsList =
-              await youtubeChannelsListResponse.json();
-
-            if (youtubeChannelsList.items.length === 0) {
-              return new Response(
-                JSON.stringify({
-                  error: `channel not found`,
-                }),
-                {
-                  headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-            }
-
-            const uploadsPlaylistId =
-              youtubeChannelsList.items[0].contentDetails.relatedPlaylists
-                .uploads;
-
-            const youtubePlaylistItemsList = await fetch(
-              `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=1&key=${API_Key}`
-            );
-
-            const youtubePlaylistItemsListData =
-              await youtubePlaylistItemsList.json();
-
-            if (youtubePlaylistItemsListData.items.length === 0) {
-              return new Response(
-                JSON.stringify({
-                  error: `no videos found in the channel`,
-                }),
-                {
-                  headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-            }
-
-            return new Response(
-              youtubePlaylistItemsListData.items[0].snippet.resourceId.videoId
-            );
-          })();
-        case "/browser-rendering/screenshot":
-          return (async () => {
-            const { searchParams } = new URL(request.url);
-            const url = searchParams.get("url");
-            const type = searchParams.get("type") || "webp";
-            const fullPage = searchParams.get("fullPage") !== null;
-            const width = parseInt(searchParams.get("width"), 10) || 1920;
-            const height = parseInt(searchParams.get("height"), 10) || 1080;
-            const delay = parseInt(searchParams.get("delay"), 10) || 0;
-
-            if (!url)
-              return router.respond({
-                error: "URL parameter is required",
-              });
-
-            if (!/^https?:\/\//.test(url))
-              return router.respond({
-                error: "Invalid URL format",
-              });
-
-            const browser = await puppeteer.launch(environment.MYBROWSER);
-            const page = await browser.newPage();
-            await page.setViewport({ width, height });
-            await page.goto(url, {
-              waitUntil: "networkidle2",
-            });
-            if (delay > 0) {
-              await new Promise((resolve) => setTimeout(resolve, delay));
-            }
-            const screenshot = await page.screenshot({
-              type,
-              fullPage,
-            });
-            await browser.close();
-
-            return new Response(screenshot, {
-              headers: {
-                "content-type": `image/${type}`,
-              },
-            });
-          })();
-        default:
-          return new Response(
-            JSON.stringify({
-              error: `path not found`,
-            }),
-            {
-              headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Content-Type": "application/json",
-              },
-            }
-          );
-      }
+    if (pathname.startsWith("/api")) {
+      return new Response("Hello from the API!", {
+        headers: { "Content-Type": "text/plain" },
+      });
     }
 
     return environment.ASSETS.fetch(request);
