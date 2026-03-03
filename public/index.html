@@ -115,13 +115,13 @@
             <ul style={{ listStyleType: "square" }}>
               {[
                 {
-                  role: "Lead Developer",
+                  role: "Creative Lead",
                   connective: "at",
                   place: "Blue Bean Games",
                   url: "https://zue.dev/bbg",
                 },
                 {
-                  role: "Director",
+                  role: "Director of Engineering",
                   connective: "at",
                   place: "Unnamed Group",
                   url: "https://unnamed.group/",
@@ -132,9 +132,20 @@
                   place: "YayJayBae",
                   url: "https://yayjaybae.com/",
                 },
+                {
+                  role: "Solutions Architect",
+                  connective: "at",
+                  place: "your company?",
+                  url: "https://zue.dev/resume",
+                  styles: {
+                    fontStyle: "italic",
+                    background: "yellow",
+                    color: "black",
+                  },
+                },
               ].map((project, index) => (
                 <li key={index}>
-                  <a href={project.url}>
+                  <a href={project.url} style={project.styles}>
                     <b>{project.role}</b> {project.connective} {project.place}
                   </a>
                 </li>
