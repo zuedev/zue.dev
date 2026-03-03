@@ -10,42 +10,68 @@
       content="Blue Bean Games is a newly-formed game studio that believes in the power of open-source software. All of our work is completely dedicated to the public domain from company literature to video games."
     />
     <style>
+      /* import Itim font */
       @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 
+      /* import Inter font */
+      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+      /* set page background and text color */
       html {
         background-color: #006eff;
         color: white;
       }
 
+      /* hide scrollbar */
       html::-webkit-scrollbar {
         display: none;
       }
 
+      /* apply Itim font */
       .itim-regular {
         font-family: "Itim", cursive;
         font-weight: 400;
         font-style: normal;
       }
 
+      /* apply Inter font */
+      .inter-regular {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      /* remove margin and padding from body */
       body {
         margin: 0;
         padding: 0;
+      }
 
+      /* set body fallback font */
+      body {
+        font-family: monospace;
+      }
+
+      /* center content of body using flexbox */
+      body {
         display: flex;
         justify-content: center;
         flex-direction: column;
+      }
+
+      /* make body full height */
+      body {
         height: 100vh;
+      }
 
-        font-family: monospace;
-
+      /* constrain body width and center horizontally */
+      body {
         max-width: 720px;
         width: 100%;
         margin: auto;
-
-        opacity: 0;
-        animation: fadeIn 1s ease-in-out forwards;
       }
 
+      /* fade in animation */
       @keyframes fadeIn {
         0% {
           opacity: 0;
@@ -55,18 +81,27 @@
         }
       }
 
+      /* fade in body content */
+      body {
+        opacity: 0;
+        animation: fadeIn 1s ease-in-out forwards;
+      }
+
+      /* style main paragraph */
       p {
         font-size: 2rem;
         text-align: justify;
         padding: 1rem;
       }
 
+      /* style footer text */
       span {
         text-align: right;
         padding: 1rem;
         opacity: 0.5;
       }
 
+      /* link styles */
       a {
         color: white;
         text-decoration: dotted underline;
@@ -79,14 +114,27 @@
     </style>
   </head>
   <body class="itim-regular">
-    <p>
-      Blue Bean Games is a newly-formed game studio that believes in the power
-      of open-source software. All of our work is completely dedicated to the
-      public domain from company literature to video games.
-    </p>
-    <span>
-      "Blue Bean Games" is made with ❤️ by
-      <a href="https://zue.dev" target="_blank">zue.dev</a>
-    </span>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" data-type="module">
+      import React from "https://esm.sh/react@18";
+      import ReactDOM from "https://esm.sh/react-dom@18/client";
+
+      ReactDOM.createRoot(document.body).render(
+        <>
+          <p>
+            Blue Bean Games is a newly-formed game studio that believes in the
+            power of open-source software. All of our work is completely
+            dedicated to the public domain from company literature to video
+            games.
+          </p>
+          <span className="inter-regular">
+            "Blue Bean Games" is made with ❤️ by{" "}
+            <a href="https://zue.dev" target="_blank">
+              zue.dev
+            </a>
+          </span>
+        </>,
+      );
+    </script>
   </body>
 </html>
