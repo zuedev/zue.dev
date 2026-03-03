@@ -111,18 +111,31 @@
           </p>
 
           <article>
-            <h2>Projects</h2>
-            <ul>
+            <h2>What am I working on?</h2>
+            <ul style={{ listStyleType: "square" }}>
               {[
                 {
-                  name: "Unnamed Group",
-                  url: "https://unnamed.group/",
-                  description: "Non-profit gaming community management",
+                  role: "Lead Developer",
+                  connective: "at",
+                  place: "Blue Bean Games",
+                  url: "https://zue.dev/bbg",
                 },
-              ].map((project) => (
-                <li key={project.name}>
+                {
+                  role: "Director",
+                  connective: "at",
+                  place: "Unnamed Group",
+                  url: "https://unnamed.group/",
+                },
+                {
+                  role: "Manager",
+                  connective: "for",
+                  place: "YayJayBae",
+                  url: "https://yayjaybae.com/",
+                },
+              ].map((project, index) => (
+                <li key={index}>
                   <a href={project.url}>
-                    {project.name}: {project.description}
+                    <b>{project.role}</b> {project.connective} {project.place}
                   </a>
                 </li>
               ))}
