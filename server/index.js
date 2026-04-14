@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/cloudflare";
+
 const configuration = {
   redirects: [
     // socials
@@ -76,8 +78,15 @@ const configuration = {
   ],
 };
 
-export default {
-  /*
+export default Sentry.withSentry(
+  (env) => ({
+    dsn: "https://0c0371903ecb051a9c930131bc89ccf9@o613246.ingest.us.sentry.io/4511218222235648",
+    // Adds request headers and IP for users, for more info visit:
+    // https://docs.sentry.io/platforms/javascript/guides/cloudflare/configuration/options/#sendDefaultPii
+    sendDefaultPii: true,
+  }),
+  {
+    /*
     Fetch event handler, this function will be called whenever a request is made to the worker.
     The function will parse the request and return a response based on the request path.
 
@@ -87,27 +96,31 @@ export default {
 
     @returns {Response} a new Response object
   */
-  async fetch(request, environment, context) {
-    const { pathname } = new URL(request.url);
+    async fetch(request, environment, context) {
+      const { pathname } = new URL(request.url);
 
-    if (configuration.redirects) {
-      for (const redirect of configuration.redirects) {
-        if (pathname === redirect.from || pathname === redirect.from + "/") {
-          return Response.redirect(redirect.to, 301);
+      if (configuration.redirects) {
+        for (const redirect of configuration.redirects) {
+          if (pathname === redirect.from || pathname === redirect.from + "/") {
+            return Response.redirect(redirect.to, 301);
+          }
         }
       }
-    }
 
-    if (pathname.startsWith("/api")) {
-      return new Response("Hello from the API!", {
-        headers: { "Content-Type": "text/plain" },
-      });
-    }
+      if (pathname.startsWith("/api")) {
+        return new Response("Hello from the API!", {
+          headers: { "Content-Type": "text/plain" },
+        });
+      }
 
-    return environment.ASSETS.fetch(request);
-  },
+      if (pathname.startsWith("/sentry-test-error")) {
+        throw new Error("Sentry test error");
+      }
 
-  /*
+      return environment.ASSETS.fetch(request);
+    },
+
+    /*
     Email event handler, this function will be called whenever an email is sent to the worker.
     The function will parse the email message and forward it to a specified email address.
 
@@ -117,11 +130,11 @@ export default {
 
     @returns {void}
   */
-  async email(message, environment, context) {
-    message.forward("alex@zue.dev");
-  },
+    async email(message, environment, context) {
+      message.forward("alex@zue.dev");
+    },
 
-  /*
+    /*
     Scheduled event handler, this function will be called whenever a scheduled event is triggered.
     The function will perform a task and return a response based on the task outcome.
 
@@ -131,7 +144,8 @@ export default {
 
     @returns {void}
   */
-  async scheduled(event, environment, context) {
-    console.log("Scheduled event triggered!");
+    async scheduled(event, environment, context) {
+      console.log("Scheduled event triggered!");
+    },
   },
-};
+);

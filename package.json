@@ -1,6 +1,14 @@
 {
   "scripts": {
     "dev": "npx wrangler dev",
-    "deploy": "npx wrangler deploy"
+    "deploy": "npx wrangler deploy",
+    "sentry:sourcemaps": "_SENTRY_RELEASE=$(sentry-cli releases propose-version) && sentry-cli releases new $_SENTRY_RELEASE --org=zuedev --project=zue-dev && sentry-cli sourcemaps upload --org=zuedev --project=zue-dev --release=$_SENTRY_RELEASE --strip-prefix 'dist\\..' dist",
+    "sentry:sourcemaps:windows": "set _SENTRY_RELEASE=$(sentry-cli releases propose-version) && sentry-cli releases new %_SENTRY_RELEASE% --org=zuedev --project=zue-dev && sentry-cli sourcemaps upload --org=zuedev --project=zue-dev --release=%_SENTRY_RELEASE% --strip-prefix 'dist\\..' dist"
+  },
+  "dependencies": {
+    "@sentry/cloudflare": "^10.48.0"
+  },
+  "devDependencies": {
+    "@sentry/cli": "^2.58.5"
   }
 }
